@@ -44,7 +44,7 @@ export function AtsScorePanel({ data, jd }: { data: ResumeData; jd: string }) {
         {loading ? (
           <span className="flex items-center gap-2">
             <span className="h-4 w-4 animate-spin rounded-full border-2 border-gray-300 border-t-brand-600" />
-            Analyzing…
+            Analyzing...
           </span>
         ) : "✦ Score my ATS match"}
       </button>

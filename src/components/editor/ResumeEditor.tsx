@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import type { CustomLayout, Resume, ResumeData, TemplateId } from "@/lib/types";
@@ -10,6 +10,7 @@ import { PhotoUpload } from "./PhotoUpload";
 import { ThemeColorPicker } from "./ThemeColorPicker";
 import { AtsScorePanel } from "./AtsScorePanel";
 import { CoverLetterPanel } from "./CoverLetterPanel";
+import { KeywordsSuggestionPanel } from "./KeywordsSuggestionPanel";
 import { SkillsEditor } from "./SkillsEditor";
 import { ToastContainer, toast } from "./Toast";
 import {
@@ -22,17 +23,17 @@ import {
 type SaveStatus = "idle" | "saving" | "saved" | "error";
 
 const NAV_ITEMS = [
-  { id: "contact",      label: "Contact",       icon: "👤" },
-  { id: "summary",      label: "Summary",        icon: "✶" },
-  { id: "experience",   label: "Experience",     icon: "💼" },
-  { id: "education",    label: "Education",      icon: "🎓" },
-  { id: "skills",       label: "Skills",         icon: "⚙" },
-  { id: "projects",     label: "Projects",       icon: "◇" },
-  { id: "certifications", label: "Certs",        icon: "🏅" },
-  { id: "languages",    label: "Languages",      icon: "🌐" },
-  { id: "awards",       label: "Awards",         icon: "🏆" },
-  { id: "custom",       label: "Custom",         icon: "＋" },
-  { id: "ai-tools",     label: "AI Tools",       icon: "✦" },
+  { id: "contact", label: "Contact", icon: "01" },
+  { id: "summary", label: "Summary", icon: "02" },
+  { id: "experience", label: "Experience", icon: "03" },
+  { id: "education", label: "Education", icon: "04" },
+  { id: "skills", label: "Skills", icon: "05" },
+  { id: "projects", label: "Projects", icon: "06" },
+  { id: "certifications", label: "Certs", icon: "07" },
+  { id: "languages", label: "Languages", icon: "08" },
+  { id: "awards", label: "Awards", icon: "09" },
+  { id: "custom", label: "Custom", icon: "10" },
+  { id: "ai-tools", label: "AI Tools", icon: "AI" },
 ];
 
 function calcCompletion(data: ResumeData): number {
@@ -50,6 +51,40 @@ function calcCompletion(data: ResumeData): number {
   if (data.skills.length >= 3)          score += 10;
   if (data.projects.length > 0)         score += 5;
   return Math.min(100, score);
+}
+
+function calcAtsReadiness(data: ResumeData): number {
+  let score = 0;
+  const bullets = data.experience.flatMap((exp) => exp.bullets).filter((b) => b.trim().length > 0);
+  const quantifiedBullets = bullets.filter((b) => /\d|%|\$|revenue|users|customers|hours|days|weeks|months/i.test(b));
+
+  if (data.contact.fullName && data.contact.email && data.contact.phone && data.contact.location) score += 16;
+  if (data.contact.title) score += 8;
+  if (data.summary.trim().length >= 80 && data.summary.trim().length <= 420) score += 14;
+  if (data.experience.length > 0) score += 12;
+  if (bullets.length >= 3) score += 12;
+  if (quantifiedBullets.length >= Math.min(3, bullets.length)) score += 12;
+  if (data.skills.length >= 8) score += 10;
+  if (data.education.length > 0) score += 6;
+  if (data.projects.length > 0 || data.certifications.length > 0 || data.awards.length > 0) score += 5;
+  if (data.contact.linkedin || data.contact.github || data.contact.website) score += 5;
+
+  return Math.min(100, score);
+}
+
+function getNextBestActions(data: ResumeData): string[] {
+  const actions: string[] = [];
+  const bullets = data.experience.flatMap((exp) => exp.bullets).filter((b) => b.trim().length > 0);
+  const quantifiedBullets = bullets.filter((b) => /\d|%|\$|revenue|users|customers|hours|days|weeks|months/i.test(b));
+
+  if (!data.contact.title) actions.push("Add a clear target title so AI and keywords know the role.");
+  if (data.summary.trim().length < 80) actions.push("Write a 3-4 line summary with role, strengths, and impact.");
+  if (data.experience.length === 0) actions.push("Add your most recent role with 3 impact-focused bullets.");
+  if (bullets.length > 0 && quantifiedBullets.length < Math.min(3, bullets.length)) actions.push("Add numbers to bullets: scope, revenue, users, cost, speed, or quality.");
+  if (data.skills.length < 8) actions.push("Add 8-12 role keywords from the job description.");
+  if (!data.contact.linkedin && !data.contact.github && !data.contact.website) actions.push("Add LinkedIn, portfolio, GitHub, or a professional website.");
+
+  return actions.slice(0, 4);
 }
 
 export function ResumeEditor({ initial }: { initial: Resume }) {
@@ -81,7 +116,7 @@ export function ResumeEditor({ initial }: { initial: Resume }) {
         body: JSON.stringify({ title, template, data }),
       });
       setStatus(res.ok ? "saved" : "error");
-      if (!res.ok) toast("Save failed — check your connection", "error");
+      if (!res.ok) toast("Save failed - check your connection", "error");
     }, 1000);
     return () => { if (debounceRef.current) clearTimeout(debounceRef.current); };
   }, [title, template, data, initial.id]);
@@ -117,6 +152,8 @@ export function ResumeEditor({ initial }: { initial: Resume }) {
   }
 
   const completion = useMemo(() => calcCompletion(data), [data]);
+  const atsReadiness = useMemo(() => calcAtsReadiness(data), [data]);
+  const nextBestActions = useMemo(() => getNextBestActions(data), [data]);
   const previewData = useMemo(() => data, [data]);
 
   function scrollTo(id: string) {
@@ -129,7 +166,7 @@ export function ResumeEditor({ initial }: { initial: Resume }) {
     <div className="flex min-h-screen flex-col">
       <ToastContainer />
 
-      {/* ── Top toolbar ── */}
+      {/* Top toolbar */}
       <div className="sticky top-14 z-30 border-b border-gray-200 bg-white/95 backdrop-blur px-4 py-3">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-3">
           {/* Resume name */}
@@ -143,8 +180,8 @@ export function ResumeEditor({ initial }: { initial: Resume }) {
 
           {/* Save status */}
           <div className="flex items-center gap-2 text-xs">
-            {status === "saving" && <span className="pill-saving">● Saving…</span>}
-            {status === "saved"  && <span className="pill-saved">✓ Saved</span>}
+            {status === "saving" && <span className="pill-saving">Saving...</span>}
+            {status === "saved"  && <span className="pill-saved">Saved</span>}
             {status === "error"  && <span className="pill-error">! Error</span>}
             {status === "idle"   && <span className="text-gray-400">Autosave on</span>}
           </div>
@@ -187,13 +224,13 @@ export function ResumeEditor({ initial }: { initial: Resume }) {
               }}
               className="btn-secondary hidden sm:flex"
             >
-              📄 Download Word
+              Download Word
             </button>
             <a
               href={`/api/resumes/${initial.id}/pdf?template=${template}`}
               className="btn-primary"
             >
-              ↓ Download PDF
+              Download PDF
             </a>
           </div>
           <button onClick={deleteResume} className="btn-danger text-sm">Delete</button>
@@ -228,19 +265,19 @@ export function ResumeEditor({ initial }: { initial: Resume }) {
             }}
             className="flex items-center gap-2 rounded-full bg-gradient-to-r from-purple-600 to-brand-600 px-4 py-1.5 text-xs font-bold text-white shadow-lg transition-transform hover:scale-105 active:scale-95"
           >
-            ✨ AI Smart Polish
+            AI Smart Polish
           </button>
         </div>
       </div>
 
-      {/* ── Main layout ── */}
+      {/* Main layout */}
       <div className={`mx-auto flex flex-1 gap-6 py-6 lg:flex-row ${
         isCanvasFullscreen && template === "custom"
           ? "w-full max-w-none px-4"
           : "w-full max-w-7xl px-4"
       }`}>
 
-        {/* Section nav sidebar — hidden in fullscreen */}
+        {/* Section nav sidebar, hidden in fullscreen */}
         <aside className={`hidden w-36 shrink-0 lg:block ${isCanvasFullscreen && template === "custom" ? "lg:hidden" : ""}`}>
           <nav className="sticky top-40 flex flex-col gap-1">
             {NAV_ITEMS.map((item) => (
@@ -260,11 +297,17 @@ export function ResumeEditor({ initial }: { initial: Resume }) {
           </nav>
         </aside>
 
-        {/* Editor form — hidden in fullscreen canvas mode */}
+        {/* Editor form, hidden in fullscreen canvas mode */}
         <div className={`min-w-0 flex-1 space-y-5 ${isCanvasFullscreen && template === "custom" ? "hidden" : ""}`}>
+          <ReadinessPanel
+            completion={completion}
+            atsReadiness={atsReadiness}
+            actions={nextBestActions}
+            onJump={scrollTo}
+          />
 
           {/* CONTACT */}
-          <Section id="contact" title="Contact" icon="👤">
+          <Section id="contact" title="Contact" icon="01">
             <div className="mb-4">
               <PhotoUpload
                 value={data.contact.photoDataUrl}
@@ -280,27 +323,27 @@ export function ResumeEditor({ initial }: { initial: Resume }) {
               <Field label="Phone"><input className="input" value={data.contact.phone} onChange={(e) => setContact({ phone: e.target.value })} /></Field>
               <Field label="Location"><input className="input" placeholder="New York, NY" value={data.contact.location} onChange={(e) => setContact({ location: e.target.value })} /></Field>
               <Field label="Website"><input className="input" value={data.contact.website ?? ""} onChange={(e) => setContact({ website: e.target.value })} /></Field>
-              <Field label="LinkedIn"><input className="input" placeholder="linkedin.com/in/…" value={data.contact.linkedin ?? ""} onChange={(e) => setContact({ linkedin: e.target.value })} /></Field>
-              <Field label="GitHub"><input className="input" placeholder="github.com/…" value={data.contact.github ?? ""} onChange={(e) => setContact({ github: e.target.value })} /></Field>
+              <Field label="LinkedIn"><input className="input" placeholder="linkedin.com/in/name" value={data.contact.linkedin ?? ""} onChange={(e) => setContact({ linkedin: e.target.value })} /></Field>
+              <Field label="GitHub"><input className="input" placeholder="github.com/name" value={data.contact.github ?? ""} onChange={(e) => setContact({ github: e.target.value })} /></Field>
               <Field label="Twitter / X"><input className="input" placeholder="@handle" value={(data.contact as any).twitter ?? ""} onChange={(e) => setContact({ twitter: e.target.value } as any)} /></Field>
             </Grid>
           </Section>
 
           {/* SUMMARY */}
           <Section
-            id="summary" title="Professional Summary" icon="✶"
+            id="summary" title="Professional Summary" icon="02"
             right={
               <AIButton
                 endpoint="/api/ai/generate-summary"
                 payload={() => ({ resume: data })}
                 onResult={(text) => setData((d) => ({ ...d, summary: text }))}
-                label="✦ Generate with AI"
+                label="Generate with AI"
               />
             }
           >
             <textarea
               rows={4} className="input"
-              placeholder="A 2–3 sentence pitch. Click ✦ to have Claude draft one from your experience."
+              placeholder="A 2-3 sentence pitch. Use AI to draft one from your experience."
               value={data.summary}
               onChange={(e) => setData((d) => ({ ...d, summary: e.target.value }))}
             />
@@ -309,7 +352,7 @@ export function ResumeEditor({ initial }: { initial: Resume }) {
 
           {/* EXPERIENCE */}
           <Section
-            id="experience" title="Experience" icon="💼"
+            id="experience" title="Experience" icon="03"
             right={
               <button className="btn-secondary" onClick={() =>
                 setData((d) => ({ ...d, experience: [...d.experience, { id: uid(), company: "", role: "", location: "", startDate: "", endDate: "", current: false, bullets: [""] }] }))
@@ -346,9 +389,9 @@ export function ResumeEditor({ initial }: { initial: Resume }) {
                             <AIButton tiny endpoint="/api/ai/improve-bullet"
                               payload={() => ({ bullet: b, role: exp.role, company: exp.company })}
                               onResult={(text) => updateBullet(setData, idx, bi, text)}
-                              label="✦" title="Improve with AI" />
+                              label="AI" title="Improve with AI" />
                             <button className="btn-icon text-red-400 hover:text-red-600 hover:bg-red-50"
-                              onClick={() => removeBullet(setData, idx, bi)} title="Remove bullet">✕</button>
+                              onClick={() => removeBullet(setData, idx, bi)} title="Remove bullet">x</button>
                           </div>
                         </div>
                       ))}
@@ -369,7 +412,7 @@ export function ResumeEditor({ initial }: { initial: Resume }) {
 
           {/* EDUCATION */}
           <Section
-            id="education" title="Education" icon="🎓"
+            id="education" title="Education" icon="04"
             right={
               <button className="btn-secondary" onClick={() =>
                 setData((d) => ({ ...d, education: [...d.education, { id: uid(), school: "", degree: "", field: "", startDate: "", endDate: "", gpa: "" }] }))
@@ -401,7 +444,7 @@ export function ResumeEditor({ initial }: { initial: Resume }) {
           </Section>
 
           {/* SKILLS */}
-          <Section id="skills" title="Skills" icon="⚙">
+          <Section id="skills" title="Skills" icon="05">
             <SkillsEditor
               value={data.skills}
               onChange={(next) => setData((d) => ({ ...d, skills: next }))}
@@ -410,7 +453,7 @@ export function ResumeEditor({ initial }: { initial: Resume }) {
 
           {/* PROJECTS */}
           <Section
-            id="projects" title="Projects" icon="◇"
+            id="projects" title="Projects" icon="06"
             right={
               <button className="btn-secondary" onClick={() =>
                 setData((d) => ({ ...d, projects: [...d.projects, { id: uid(), name: "", link: "", tech: "", description: "" }] }))
@@ -440,7 +483,7 @@ export function ResumeEditor({ initial }: { initial: Resume }) {
           </Section>
 
           {/* CERTIFICATIONS */}
-          <Section id="certifications" title="Certifications" icon="🏅">
+          <Section id="certifications" title="Certifications" icon="07">
             <CertificationsEditor
               value={data.certifications ?? []}
               onChange={(v) => setData((d) => ({ ...d, certifications: v }))}
@@ -448,7 +491,7 @@ export function ResumeEditor({ initial }: { initial: Resume }) {
           </Section>
 
           {/* LANGUAGES */}
-          <Section id="languages" title="Languages" icon="🌐">
+          <Section id="languages" title="Languages" icon="08">
             <LanguagesEditor
               value={data.languages ?? []}
               onChange={(v) => setData((d) => ({ ...d, languages: v }))}
@@ -456,7 +499,7 @@ export function ResumeEditor({ initial }: { initial: Resume }) {
           </Section>
 
           {/* AWARDS */}
-          <Section id="awards" title="Awards & Achievements" icon="🏆">
+          <Section id="awards" title="Awards & Achievements" icon="09">
             <AwardsEditor
               value={data.awards ?? []}
               onChange={(v) => setData((d) => ({ ...d, awards: v }))}
@@ -464,8 +507,8 @@ export function ResumeEditor({ initial }: { initial: Resume }) {
           </Section>
 
           {/* CUSTOM SECTIONS */}
-          <Section id="custom" title="Custom Sections" icon="＋">
-            <p className="mb-3 text-sm text-gray-500">Add any section — volunteering, publications, interests, and more.</p>
+          <Section id="custom" title="Custom Sections" icon="10">
+            <p className="mb-3 text-sm text-gray-500">Add any section: volunteering, publications, interests, and more.</p>
             <CustomSectionsEditor
               value={data.customSections ?? []}
               onChange={(v) => setData((d) => ({ ...d, customSections: v }))}
@@ -473,22 +516,39 @@ export function ResumeEditor({ initial }: { initial: Resume }) {
           </Section>
 
           {/* AI TOOLS */}
-          <Section id="ai-tools" title="AI Tools" icon="✦">
+          <Section id="ai-tools" title="AI Tools" icon="AI">
             <p className="mb-3 text-sm text-gray-500">
               Paste a job description once, then use it for tailoring, ATS scoring, and a cover letter.
             </p>
             <textarea rows={5} className="input"
-              placeholder="Paste the full job description here…"
+              placeholder="Paste the full job description here..."
               value={jd} onChange={(e) => setJd(e.target.value)} />
             <div className="mt-3 flex flex-wrap gap-2">
               <button className="btn-primary" disabled={tailoring || !jd.trim()} onClick={tailorToJob}>
                 {tailoring ? (
                   <span className="flex items-center gap-2">
                     <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white" />
-                    Tailoring…
+                    Tailoring...
                   </span>
-                ) : "✦ Tailor my resume"}
+                ) : "Tailor my resume"}
               </button>
+            </div>
+
+            <div className="mt-6 border-t border-gray-100 pt-5">
+              <h3 className="text-sm font-semibold text-gray-900">Industry Keywords</h3>
+              <p className="mb-3 text-xs text-gray-500">Get targeted keywords based on job title to improve your ATS score and skill relevance.</p>
+              <KeywordsSuggestionPanel
+                jobTitle={data.contact.title || ""}
+                industry=""
+                experience=""
+                onAddSkill={(skill) => {
+                  const skillExists = data.skills.some((s) => s.name.toLowerCase() === skill.toLowerCase());
+                  if (!skillExists) {
+                    setData((d) => ({ ...d, skills: [...d.skills, { name: skill }] }));
+                  }
+                }}
+                onAddBulletVerb={() => {}}
+              />
             </div>
 
             <div className="mt-6 border-t border-gray-100 pt-5">
@@ -533,7 +593,7 @@ export function ResumeEditor({ initial }: { initial: Resume }) {
   );
 }
 
-/* ── Sub-components ── */
+/* Sub-components */
 function Section({
   id, title, icon, right, children,
 }: {
@@ -554,6 +614,69 @@ function Section({
   );
 }
 
+function ReadinessPanel({
+  completion,
+  atsReadiness,
+  actions,
+  onJump,
+}: {
+  completion: number;
+  atsReadiness: number;
+  actions: string[];
+  onJump: (id: string) => void;
+}) {
+  const scoreColor = atsReadiness >= 80 ? "text-emerald-700" : atsReadiness >= 60 ? "text-amber-700" : "text-red-700";
+  return (
+    <section className="rounded-2xl border border-gray-200 bg-white p-5 shadow-card">
+      <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-widest text-brand-600">Application readiness</p>
+          <h2 className="mt-1 text-xl font-bold text-gray-950">Get this resume ready for a real job post.</h2>
+          <p className="mt-1 text-sm leading-6 text-gray-500">
+            Top resume builders guide users toward ATS-safe structure, quantified bullets, role keywords, and job-specific tailoring.
+          </p>
+        </div>
+        <div className="grid grid-cols-2 gap-3 sm:min-w-64">
+          <ScoreBadge label="Profile" value={completion} />
+          <ScoreBadge label="ATS basics" value={atsReadiness} className={scoreColor} />
+        </div>
+      </div>
+
+      <div className="mt-5 grid gap-4 lg:grid-cols-[1fr_auto] lg:items-start">
+        <div className="rounded-xl bg-slate-50 p-4">
+          <p className="text-sm font-semibold text-gray-900">Next best fixes</p>
+          {actions.length > 0 ? (
+            <ul className="mt-3 space-y-2 text-sm text-gray-600">
+              {actions.map((action) => (
+                <li key={action} className="flex gap-2">
+                  <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-500" />
+                  <span>{action}</span>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="mt-2 text-sm text-emerald-700">Core resume structure looks strong. Paste a job description and run ATS scoring next.</p>
+          )}
+        </div>
+        <div className="flex flex-wrap gap-2 lg:w-48">
+          <button className="btn-secondary w-full" onClick={() => onJump("ai-tools")}>Paste job post</button>
+          <button className="btn-secondary w-full" onClick={() => onJump("experience")}>Improve bullets</button>
+          <button className="btn-secondary w-full" onClick={() => onJump("skills")}>Add keywords</button>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ScoreBadge({ label, value, className = "text-brand-700" }: { label: string; value: number; className?: string }) {
+  return (
+    <div className="rounded-xl border border-gray-200 bg-gray-50 p-3">
+      <p className="text-xs font-semibold uppercase tracking-wider text-gray-500">{label}</p>
+      <p className={`mt-1 text-2xl font-bold ${className}`}>{value}%</p>
+    </div>
+  );
+}
+
 function Grid({ children }: { children: React.ReactNode }) {
   return <div className="grid gap-3 sm:grid-cols-2">{children}</div>;
 }
@@ -567,7 +690,7 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
   );
 }
 
-/* ── Helpers ── */
+/* Helpers */
 function updateExp(set: React.Dispatch<React.SetStateAction<ResumeData>>, idx: number, patch: any) {
   set((d) => ({ ...d, experience: d.experience.map((e, i) => (i === idx ? { ...e, ...patch } : e)) }));
 }
@@ -586,3 +709,4 @@ function updateEdu(set: React.Dispatch<React.SetStateAction<ResumeData>>, idx: n
 function updateProj(set: React.Dispatch<React.SetStateAction<ResumeData>>, idx: number, patch: any) {
   set((d) => ({ ...d, projects: d.projects.map((e, i) => (i === idx ? { ...e, ...patch } : e)) }));
 }
+
