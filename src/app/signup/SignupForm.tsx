@@ -1,12 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 
 export function SignupForm() {
   const router = useRouter();
+  const params = useSearchParams();
+  const next = params?.get("next") || "/dashboard";
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -28,7 +30,7 @@ export function SignupForm() {
     setLoading(false);
     if (error) return setError(error.message);
     if (data.session) {
-      router.push("/dashboard");
+      router.push(next);
       router.refresh();
     } else {
       setInfo("Check your email to confirm your account, then sign in.");
@@ -98,7 +100,7 @@ export function SignupForm() {
       
       <p className="mt-8 text-center text-sm text-gray-500">
         Already have an account?{" "}
-        <Link href="/login" className="font-semibold text-brand-600 hover:text-brand-700 transition-colors">
+        <Link href={`/login?next=${encodeURIComponent(next)}`} className="font-semibold text-brand-600 hover:text-brand-700 transition-colors">
           Sign in here
         </Link>
       </p>

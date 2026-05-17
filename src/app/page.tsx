@@ -196,8 +196,8 @@ export default function HomePage() {
               <Link href="/signup" className="rounded-xl bg-white px-6 py-3 text-sm font-bold text-gray-950 transition hover:bg-gray-100">
                 Build my resume
               </Link>
-              <Link href="/pricing" className="rounded-xl border border-white/20 px-6 py-3 text-sm font-bold text-white transition hover:bg-white/10">
-                View pricing
+              <Link href="/templates" className="rounded-xl border border-white/20 px-6 py-3 text-sm font-bold text-white transition hover:bg-white/10">
+                Browse templates
               </Link>
             </div>
           </div>
@@ -209,7 +209,6 @@ export default function HomePage() {
           <nav className="flex flex-wrap gap-5">
             <Link href="/#workflow" className="hover:text-gray-950">Features</Link>
             <Link href="/#templates" className="hover:text-gray-950">Templates</Link>
-            <Link href="/pricing" className="hover:text-gray-950">Pricing</Link>
             <Link href="/review" className="hover:text-gray-950">Expert Review</Link>
           </nav>
           <p>(c) {new Date().getFullYear()} ResumeForge.</p>

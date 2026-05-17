@@ -7,6 +7,7 @@ import { BLOCK_GROUPS, BLOCK_LABELS, defaultLayout, newBlock } from "@/lib/custo
 import { BlockContent } from "./BlockContent";
 import { IconPicker } from "./IconPicker";
 import { BlockImageUpload } from "./BlockImageUpload";
+import { TemplateGallery } from "./TemplateGallery";
 import type { IconName } from "@/lib/icons";
 
 type Props = {
@@ -182,6 +183,7 @@ export function CustomTemplateEditor({ data, onChange, onContactChange, onSummar
   const selected = layout.blocks.find((b) => b.id === selectedId) ?? null;
 
   const [isPreview, setIsPreview] = useState(false);
+  const [galleryOpen, setGalleryOpen] = useState(false);
 
   // ESC exits preview mode.
   useEffect(() => {
@@ -196,6 +198,15 @@ export function CustomTemplateEditor({ data, onChange, onContactChange, onSummar
     <div className={`flex h-full flex-col rounded-xl border border-gray-200 transition ${isPreview ? "bg-gray-700" : "bg-gray-100"}`}>
       {/* Toolbar */}
       <div className="flex flex-wrap items-center gap-2 border-b border-gray-200 bg-white px-2 py-1.5 text-xs">
+        {!isPreview && (
+          <button
+            onClick={() => setGalleryOpen(true)}
+            className="rounded-md bg-gradient-to-r from-purple-600 to-brand-600 px-3 py-1.5 font-bold text-white shadow-sm transition hover:opacity-90"
+            title="Browse ready-made templates"
+          >
+            ✨ Templates
+          </button>
+        )}
         {!isPreview && BLOCK_GROUPS.map((g) => (
           <AddMenu key={g.label} label={g.label} types={g.types} onAdd={addBlock} />
         ))}
@@ -376,6 +387,16 @@ export function CustomTemplateEditor({ data, onChange, onContactChange, onSummar
           </aside>
         )}
       </div>
+
+      <TemplateGallery
+        open={galleryOpen}
+        onClose={() => setGalleryOpen(false)}
+        onApply={(newLayout) => {
+          onChange(newLayout);
+          setSelectedId(null);
+          setGalleryOpen(false);
+        }}
+      />
     </div>
   );
 }

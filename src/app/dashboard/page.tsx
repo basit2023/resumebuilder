@@ -48,7 +48,12 @@ export default async function DashboardPage() {
             <h1 className="font-display text-3xl font-bold text-gray-900">My Resumes</h1>
             <p className="mt-1 text-sm text-gray-500">Create, tailor, and download your resumes.</p>
           </div>
-          <NewResumeButton />
+          <div className="flex flex-wrap gap-2">
+            <Link href="/templates" className="btn-secondary">
+              Browse templates
+            </Link>
+            <NewResumeButton />
+          </div>
         </div>
 
         {/* Stats row */}
@@ -116,9 +121,12 @@ export default async function DashboardPage() {
             <div className="grid h-16 w-16 place-items-center rounded-2xl bg-brand-50 text-3xl">📄</div>
             <h3 className="mt-5 text-xl font-bold text-gray-900">No resumes yet</h3>
             <p className="mt-2 max-w-sm text-sm text-gray-500">
-              Create your first AI-powered resume in under a minute. Start with a blank template or let Claude draft it from scratch.
+              Start with a modern template that already includes polished sample content, then edit it in your dashboard.
             </p>
-            <div className="mt-6">
+            <div className="mt-6 flex flex-wrap justify-center gap-2">
+              <Link href="/templates" className="btn-secondary">
+                Browse templates
+              </Link>
               <NewResumeButton />
             </div>
             <p className="mt-3 text-xs text-gray-400">Free · No credit card needed</p>

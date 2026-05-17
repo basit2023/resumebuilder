@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { BILLING_ENABLED } from "@/lib/config";
 
 export function SiteHeader({ authed }: { authed?: boolean }) {
   const [scrolled, setScrolled] = useState(false);
@@ -32,8 +33,8 @@ export function SiteHeader({ authed }: { authed?: boolean }) {
         {/* Desktop nav */}
         <nav className="hidden items-center gap-1 text-sm md:flex">
           <Link href="/#features" className="nav-link">Features</Link>
-          <Link href="/#templates" className="nav-link">Templates</Link>
-          <Link href="/pricing" className="nav-link">Pricing</Link>
+          <Link href="/templates" className="nav-link">Templates</Link>
+          {BILLING_ENABLED && <Link href="/pricing" className="nav-link">Pricing</Link>}
           <Link href="/review" className="nav-link">Expert Review</Link>
           <div className="mx-3 h-5 w-px bg-gray-200" />
           {authed ? (
@@ -66,8 +67,8 @@ export function SiteHeader({ authed }: { authed?: boolean }) {
           <nav className="flex flex-col gap-1">
             {[
               { href: "/#features", label: "Features" },
-              { href: "/#templates", label: "Templates" },
-              { href: "/pricing", label: "Pricing" },
+              { href: "/templates", label: "Templates" },
+              ...(BILLING_ENABLED ? [{ href: "/pricing", label: "Pricing" }] : []),
               { href: "/review", label: "Expert Review" },
             ].map((item) => (
               <Link

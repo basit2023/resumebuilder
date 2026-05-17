@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { BILLING_ENABLED } from "@/lib/config";
 
 export function AppHeader({ email }: { email?: string | null }) {
   const initials = email ? email.slice(0, 2).toUpperCase() : "?";
@@ -17,8 +18,9 @@ export function AppHeader({ email }: { email?: string | null }) {
         {/* Nav */}
         <nav className="flex items-center gap-1 text-sm">
           <Link href="/dashboard" className="nav-link hidden sm:inline-flex">My Resumes</Link>
+          <Link href="/templates" className="nav-link hidden sm:inline-flex">Templates</Link>
           <Link href="/review" className="nav-link hidden sm:inline-flex">Expert Review</Link>
-          <Link href="/pricing" className="nav-link hidden sm:inline-flex">Pricing</Link>
+          {BILLING_ENABLED && <Link href="/pricing" className="nav-link hidden sm:inline-flex">Pricing</Link>}
 
           {/* Avatar + email chip */}
           <div className="ml-3 flex items-center gap-2 rounded-xl border border-gray-200 bg-gray-50 px-3 py-1.5">

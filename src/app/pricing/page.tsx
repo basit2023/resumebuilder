@@ -1,9 +1,55 @@
 import Link from "next/link";
 import { SiteHeader } from "@/components/SiteHeader";
+import { UpgradeButton } from "./UpgradeButton";
+import { BILLING_ENABLED } from "@/lib/config";
 
 export const dynamic = "force-dynamic";
 
 export default function PricingPage() {
+  // Early-access mode: no paid plans shown — everything is free.
+  if (!BILLING_ENABLED) {
+    return (
+      <>
+        <SiteHeader />
+        <main className="hero-mesh pb-24">
+          <div className="mx-auto max-w-2xl px-6 py-24 text-center">
+            <span className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 py-1.5 text-xs font-semibold text-emerald-700">
+              ✨ Early access — everything free
+            </span>
+            <h1 className="mt-5 font-display text-5xl font-bold text-gray-900">
+              It&apos;s all free right now.
+            </h1>
+            <p className="mx-auto mt-4 max-w-xl text-gray-500">
+              ResumeForge is in early access. Every feature — unlimited resumes, AI tailoring,
+              cover letters, ATS scoring, all templates — is completely free while we grow.
+              No card, no catch.
+            </p>
+            <Link
+              href="/signup"
+              className="mt-8 inline-block rounded-2xl bg-brand-600 px-8 py-3.5 text-sm font-bold text-white shadow transition hover:bg-brand-700"
+            >
+              Get started free
+            </Link>
+            <ul className="mx-auto mt-12 grid max-w-md gap-3 text-left text-sm text-gray-700">
+              {[
+                "Unlimited resumes & AI generations",
+                "Job description tailoring + cover letters",
+                "ATS match scoring",
+                "All templates, including the custom canvas",
+                "PDF & Word export",
+              ].map((f) => (
+                <li key={f} className="flex items-start gap-2.5">
+                  <span className="mt-0.5 shrink-0 text-emerald-500">✓</span>
+                  {f}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </main>
+      </>
+    );
+  }
+
   return (
     <>
       <SiteHeader />
@@ -60,16 +106,25 @@ export default function PricingPage() {
                   ))}
                 </ul>
 
-                <Link
-                  href={p.cta.href}
-                  className={`mt-8 block rounded-2xl py-3 text-center text-sm font-bold transition ${
-                    p.featured
-                      ? "bg-brand-600 text-white shadow hover:bg-brand-700"
-                      : "border border-gray-300 text-gray-800 hover:bg-gray-50"
-                  }`}
-                >
-                  {p.cta.label}
-                </Link>
+                {p.id === "pro" ? (
+                  <div className="mt-8">
+                    <UpgradeButton
+                      label={p.cta.label}
+                      className="block w-full rounded-2xl bg-brand-600 py-3 text-center text-sm font-bold text-white shadow transition hover:bg-brand-700 disabled:opacity-60"
+                    />
+                  </div>
+                ) : (
+                  <Link
+                    href={p.cta.href}
+                    className={`mt-8 block rounded-2xl py-3 text-center text-sm font-bold transition ${
+                      p.featured
+                        ? "bg-brand-600 text-white shadow hover:bg-brand-700"
+                        : "border border-gray-300 text-gray-800 hover:bg-gray-50"
+                    }`}
+                  >
+                    {p.cta.label}
+                  </Link>
+                )}
               </div>
             ))}
           </div>
@@ -104,6 +159,7 @@ export default function PricingPage() {
 
 const PLANS = [
   {
+    id: "free",
     name: "Free",
     tagline: "Perfect for getting started",
     price: "$0",
@@ -119,6 +175,7 @@ const PLANS = [
     featured: false,
   },
   {
+    id: "pro",
     name: "Pro",
     tagline: "For serious job seekers",
     price: "$9",
@@ -136,6 +193,7 @@ const PLANS = [
     featured: true,
   },
   {
+    id: "review",
     name: "Expert Review",
     tagline: "Human expert feedback",
     price: "$49",
