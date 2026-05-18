@@ -171,6 +171,7 @@ export function ResumeEditor({ initial }: { initial: Resume }) {
         <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-3">
           {/* Resume name */}
           <input
+            data-tour="resume-name"
             className="min-w-0 flex-1 rounded-xl border border-transparent bg-transparent px-2 py-1 text-lg font-bold text-gray-900 transition hover:border-gray-200 focus:border-brand-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-500/20"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
@@ -187,7 +188,7 @@ export function ResumeEditor({ initial }: { initial: Resume }) {
           </div>
 
           {/* Template switcher */}
-          <div className="flex items-center gap-1 rounded-xl border border-gray-200 bg-gray-50 p-1">
+          <div data-tour="template-switcher" className="flex items-center gap-1 rounded-xl border border-gray-200 bg-gray-50 p-1">
             {(["modern","classic","compact","custom"] as TemplateId[]).map((t) => (
               <button
                 key={t}
@@ -202,13 +203,15 @@ export function ResumeEditor({ initial }: { initial: Resume }) {
           </div>
 
           {/* Color picker */}
-          <ThemeColorPicker
-            value={data.themeColor}
-            onChange={(c) => setData((d) => ({ ...d, themeColor: c }))}
-          />
+          <span data-tour="color-picker">
+            <ThemeColorPicker
+              value={data.themeColor}
+              onChange={(c) => setData((d) => ({ ...d, themeColor: c }))}
+            />
+          </span>
 
           {/* Actions */}
-          <div className="flex items-center gap-2">
+          <div data-tour="download" className="flex items-center gap-2">
             <button 
               onClick={async () => {
                 toast("Preparing your Word document...", "info");
@@ -246,7 +249,8 @@ export function ResumeEditor({ initial }: { initial: Resume }) {
               {completion}% complete
             </span>
           </div>
-          <button 
+          <button
+            data-tour="smart-polish"
             onClick={async () => {
               toast("Claude is optimizing your entire resume...", "info");
               try {
@@ -278,7 +282,7 @@ export function ResumeEditor({ initial }: { initial: Resume }) {
       }`}>
 
         {/* Section nav sidebar, hidden in fullscreen */}
-        <aside className={`hidden w-36 shrink-0 lg:block ${isCanvasFullscreen && template === "custom" ? "lg:hidden" : ""}`}>
+        <aside data-tour="section-nav" className={`hidden w-36 shrink-0 lg:block ${isCanvasFullscreen && template === "custom" ? "lg:hidden" : ""}`}>
           <nav className="sticky top-40 flex flex-col gap-1">
             {NAV_ITEMS.map((item) => (
               <button

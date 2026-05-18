@@ -11,27 +11,49 @@ export const dynamic = "force-dynamic";
 const EDITOR_TOUR = [
   {
     title: "This is your resume editor ✏️",
-    body: "Fill the form on the left — everything autosaves and previews live on the right. Quick tour of the key tools:",
+    body: "Fill the form, everything autosaves, and it previews live. Here's a 60-second tour of each control — watch the highlight.",
   },
   {
-    title: "1. Fill your sections",
-    body: "Contact, summary, experience, skills, and more. Use the side nav to jump between sections. The ✦ buttons let Claude write or improve content for you.",
+    selector: '[data-tour="resume-name"]',
+    placement: "bottom" as const,
+    title: "Name your resume",
+    body: "Click here to rename it (e.g. \"Google – Frontend\"). Keep a separate resume per job you target.",
   },
   {
-    title: "2. Pick a template & color",
-    body: "Switch between Modern, Classic, Compact, or the drag-and-drop Custom canvas — and set a theme color — from the top toolbar.",
+    selector: '[data-tour="section-nav"]',
+    placement: "right" as const,
+    title: "Jump between sections",
+    body: "Use this side menu to move through Contact, Summary, Experience, Skills, Projects and more. Fill them in the form — the ✦ buttons let Claude write or improve any field.",
   },
   {
-    title: "3. AI tools",
-    body: "Paste a job description to tailor your resume, get an ATS match score, and generate a matching cover letter.",
+    selector: '[data-tour="template-switcher"]',
+    placement: "bottom" as const,
+    title: "Switch template",
+    body: "Modern, Classic and Compact are ready-made. \"Custom\" opens a Canva-style drag-and-drop canvas where you place every block yourself.",
   },
   {
-    title: "4. Custom canvas (optional)",
-    body: "Choose the Custom template for a Canva-style editor: drag blocks, add icons/images/shapes, double-click text to edit, and pick from ready-made layouts via ✨ Templates.",
+    selector: '[data-tour="color-picker"]',
+    placement: "bottom" as const,
+    title: "Theme color",
+    body: "Recolor accents (headings, lines, links) instantly. Pick a swatch or enter any hex.",
   },
   {
-    title: "5. Download when ready",
-    body: "Export a clean, ATS-safe PDF or Word file from the toolbar. That's it — go land that interview! 🎯",
+    selector: '#section-ai-tools',
+    placement: "top" as const,
+    title: "AI tools",
+    body: "Paste a job description here to tailor your resume to it, get an ATS match score, and generate a matching cover letter — all powered by Claude.",
+  },
+  {
+    selector: '[data-tour="smart-polish"]',
+    placement: "bottom" as const,
+    title: "One-click AI polish",
+    body: "Let Claude rewrite and tighten your whole resume in one go. Great as a finishing pass.",
+  },
+  {
+    selector: '[data-tour="download"]',
+    placement: "bottom" as const,
+    title: "Download when ready",
+    body: "Export a clean, ATS-safe PDF (or Word). That's it — go land that interview! 🎯",
   },
 ];
 
