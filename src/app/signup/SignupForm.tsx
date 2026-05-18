@@ -29,11 +29,18 @@ export function SignupForm() {
     });
     setLoading(false);
     if (error) return setError(error.message);
-    if (data.session) {
+
+    const confirmed = !!(data.user?.email_confirmed_at || data.user?.confirmed_at);
+    if (data.session && confirmed) {
       router.push(next);
       router.refresh();
     } else {
-      setInfo("Check your email to confirm your account, then sign in.");
+      // Don't let an unconfirmed account through. Drop any partial session.
+      await supabase.auth.signOut();
+      setInfo(
+        "Almost there! We've sent a confirmation link to your email. " +
+          "Click it, then come back and sign in."
+      );
     }
   }
 

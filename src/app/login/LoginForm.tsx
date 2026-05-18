@@ -10,6 +10,14 @@ export function LoginForm() {
   const params = useSearchParams();
   const next = params?.get("next") || "/dashboard";
 
+  const notice = params?.get("notice");
+  const noticeText =
+    notice === "confirm"
+      ? "Please confirm your email first. Check your inbox for the confirmation link, then sign in."
+      : notice === "account"
+        ? "Your account is no longer active. Please sign up again or contact support."
+        : null;
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -32,6 +40,11 @@ export function LoginForm() {
 
   return (
     <div className="animate-fade-in">
+      {noticeText && (
+        <div className="mb-5 rounded-xl border border-amber-100 bg-amber-50 px-4 py-3 text-sm text-amber-700">
+          {noticeText}
+        </div>
+      )}
       <form onSubmit={onSubmit} className="space-y-5">
         <div>
           <label className="label">Email address</label>

@@ -3,6 +3,38 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { AppHeader } from "@/components/AppHeader";
 import { NewResumeButton } from "./NewResumeButton";
+import { OnboardingTour } from "@/components/OnboardingTour";
+
+const DASHBOARD_TOUR = [
+  {
+    title: "Welcome to ResumeForge 👋",
+    body: "Let's take 30 seconds to show you around. You can skip anytime — this only shows once.",
+  },
+  {
+    selector: '[data-tour="new-resume"]',
+    title: "Create a resume",
+    body: "Click here to start a blank resume. It opens straight into the editor with autosave.",
+  },
+  {
+    selector: '[data-tour="templates"]',
+    title: "Or start from a template",
+    body: "Browse ready-made layouts by country & format. Your details flow in automatically.",
+  },
+  {
+    selector: '[data-tour="stats"]',
+    title: "Track your work",
+    body: "See how many resumes you have and when you last edited them.",
+  },
+  {
+    selector: '[data-tour="resumes"]',
+    title: "Your resumes live here",
+    body: "Click any card to reopen the editor — tailor it to a job, score it, or download as PDF/Word.",
+  },
+  {
+    title: "You're all set 🎉",
+    body: "Everything is free during early access. Create your first resume and land that interview!",
+  },
+];
 
 export const dynamic = "force-dynamic";
 
@@ -49,15 +81,17 @@ export default async function DashboardPage() {
             <p className="mt-1 text-sm text-gray-500">Create, tailor, and download your resumes.</p>
           </div>
           <div className="flex flex-wrap gap-2">
-            <Link href="/templates" className="btn-secondary">
+            <Link href="/templates" className="btn-secondary" data-tour="templates">
               Browse templates
             </Link>
-            <NewResumeButton />
+            <span data-tour="new-resume">
+              <NewResumeButton />
+            </span>
           </div>
         </div>
 
         {/* Stats row */}
-        <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3">
+        <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3" data-tour="stats">
           <StatCard value={String(total)} label="Total resumes" icon="📄" />
           <StatCard value={lastEdited} label="Last edited" icon="⏱" />
           <StatCard value="AI Ready" label="Claude-powered" icon="✦" className="hidden sm:flex" />
@@ -65,7 +99,7 @@ export default async function DashboardPage() {
 
         {/* Resume grid */}
         {resumes && resumes.length > 0 ? (
-          <ul className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <ul className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3" data-tour="resumes">
             {resumes.map((r) => {
               const style = TEMPLATE_STYLES[r.template] ?? TEMPLATE_STYLES.modern;
               return (
@@ -117,7 +151,7 @@ export default async function DashboardPage() {
           </ul>
         ) : (
           /* Empty state */
-          <div className="mt-10 flex flex-col items-center rounded-3xl border-2 border-dashed border-gray-200 bg-white p-16 text-center">
+          <div data-tour="resumes" className="mt-10 flex flex-col items-center rounded-3xl border-2 border-dashed border-gray-200 bg-white p-16 text-center">
             <div className="grid h-16 w-16 place-items-center rounded-2xl bg-brand-50 text-3xl">📄</div>
             <h3 className="mt-5 text-xl font-bold text-gray-900">No resumes yet</h3>
             <p className="mt-2 max-w-sm text-sm text-gray-500">
@@ -133,6 +167,8 @@ export default async function DashboardPage() {
           </div>
         )}
       </main>
+
+      <OnboardingTour tourKey="dashboard-v1" steps={DASHBOARD_TOUR} />
     </>
   );
 }
