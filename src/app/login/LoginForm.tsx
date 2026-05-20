@@ -11,12 +11,14 @@ export function LoginForm() {
   const next = params?.get("next") || "/dashboard";
 
   const notice = params?.get("notice");
+  const confirmed = params?.get("confirmed");
   const noticeText =
     notice === "confirm"
       ? "Please confirm your email first. Check your inbox for the confirmation link, then sign in."
       : notice === "account"
         ? "Your account is no longer active. Please sign up again or contact support."
         : null;
+  const successText = confirmed === "1" ? "Email confirmed — you can sign in now ✅" : null;
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -40,6 +42,11 @@ export function LoginForm() {
 
   return (
     <div className="animate-fade-in">
+      {successText && (
+        <div className="mb-5 rounded-xl border border-emerald-100 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
+          {successText}
+        </div>
+      )}
       {noticeText && (
         <div className="mb-5 rounded-xl border border-amber-100 bg-amber-50 px-4 py-3 text-sm text-amber-700">
           {noticeText}

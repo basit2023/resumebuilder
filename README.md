@@ -100,10 +100,25 @@ The webhook handler flips `profiles.plan` between `free` and `pro`. Gate feature
 
 1. Push the repo to GitHub.
 2. In Vercel → New Project → import. Framework = Next.js.
-3. Add the same env vars from `.env.local`. Set `NEXT_PUBLIC_APP_URL` to your Vercel URL.
+3. Add the same env vars from `.env.local`. Set `NEXT_PUBLIC_APP_URL` to your live URL, for example `https://your-domain.com`.
 4. Deploy. The PDF route is Node runtime (configured in `route.tsx`), which Vercel supports out of the box.
 
-In Supabase → Auth → URL Configuration: add your Vercel URL to **Site URL** and **Redirect URLs**.
+In Supabase -> Auth -> URL Configuration:
+
+- Set **Site URL** to your live URL.
+- Add `https://your-domain.com/auth/callback` to **Redirect URLs**.
+- For Vercel preview deployments, add the preview URL callback too, or use a wildcard allowed by your Supabase plan.
+
+If signup works locally but deployed users do not receive confirmation emails, check Supabase -> Auth -> Emails / SMTP. Supabase's built-in sender is only suitable for testing and can hit rate limits; for production, connect a custom SMTP provider such as Resend, SendGrid, Postmark, or Amazon SES. This app does not need a separate email backend for signup confirmation because Supabase Auth sends that email.
+
+## Backend and database
+
+You already have both:
+
+- **Backend:** Next.js API routes under `src/app/api`.
+- **Database/Auth:** Supabase, using `supabase/schema.sql`.
+
+Keep Supabase enabled in production. You only need a separate backend if you want custom transactional emails, an admin dashboard, background jobs, or reviewer workflow automation beyond the current Next.js API routes.
 
 ## Roadmap (next 30 days)
 

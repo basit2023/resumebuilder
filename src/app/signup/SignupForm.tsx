@@ -22,10 +22,19 @@ export function SignupForm() {
     setInfo(null);
     setLoading(true);
     const supabase = createClient();
+
+    const origin =
+      typeof window !== "undefined"
+        ? window.location.origin
+        : process.env.NEXT_PUBLIC_APP_URL?.replace(/\/$/, "") || "";
+
     const { data, error } = await supabase.auth.signUp({
-      email,
+      email: email.trim(),
       password,
-      options: { data: { full_name: fullName } },
+      options: {
+        data: { full_name: fullName },
+        emailRedirectTo: `${origin}/auth/callback?next=/login?confirmed=1`,
+      },
     });
     setLoading(false);
     if (error) return setError(error.message);
