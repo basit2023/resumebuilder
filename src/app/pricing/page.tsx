@@ -20,7 +20,7 @@ export default function PricingPage() {
               It&apos;s all free right now.
             </h1>
             <p className="mx-auto mt-4 max-w-xl text-gray-500">
-              ResumeForge is in early access. Every feature — unlimited resumes, AI tailoring,
+              JobDraftly is in early access. Every feature — unlimited resumes, AI tailoring,
               cover letters, ATS scoring, all templates — is completely free while we grow.
               No card, no catch.
             </p>

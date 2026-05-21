@@ -21,7 +21,7 @@ export default function HomePage() {
               </h1>
 
               <p className="mt-6 max-w-2xl text-lg leading-8 text-gray-600">
-                ResumeForge combines clean ATS-safe templates, AI writing help, job description matching,
+                JobDraftly combines clean ATS-safe templates, AI writing help, job description matching,
                 cover-letter generation, Word/PDF exports, and expert review in one focused workspace.
               </p>
 
@@ -164,7 +164,7 @@ export default function HomePage() {
           <div className="mx-auto max-w-6xl px-6">
             <div className="grid gap-10 lg:grid-cols-[0.8fr_1fr] lg:items-center">
               <div>
-                <p className="text-xs font-semibold uppercase tracking-widest text-brand-600">Why ResumeForge</p>
+                <p className="text-xs font-semibold uppercase tracking-widest text-brand-600">Why JobDraftly</p>
                 <h2 className="mt-3 font-display text-4xl font-bold text-gray-950">
                   Built for applying, not just designing.
                 </h2>
@@ -205,13 +205,13 @@ export default function HomePage() {
       </main>
       <footer className="border-t border-gray-200 bg-white px-6 py-10">
         <div className="mx-auto flex max-w-6xl flex-col gap-4 text-sm text-gray-500 md:flex-row md:items-center md:justify-between">
-          <Link href="/" className="font-display font-bold text-gray-950">ResumeForge</Link>
+          <Link href="/" className="font-display font-bold text-gray-950">JobDraftly</Link>
           <nav className="flex flex-wrap gap-5">
             <Link href="/#workflow" className="hover:text-gray-950">Features</Link>
             <Link href="/#templates" className="hover:text-gray-950">Templates</Link>
             <Link href="/review" className="hover:text-gray-950">Expert Review</Link>
           </nav>
-          <p>(c) {new Date().getFullYear()} ResumeForge.</p>
+          <p>(c) {new Date().getFullYear()} JobDraftly.</p>
         </div>
       </footer>
     </>

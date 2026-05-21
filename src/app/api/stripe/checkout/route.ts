@@ -17,7 +17,7 @@ export async function POST() {
 
   const secret = process.env.STRIPE_SECRET_KEY;
   const price = process.env.NEXT_PUBLIC_STRIPE_PRICE_PRO;
-  const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "https://www.jobdraftly.com";
 
   if (!secret || !price) {
     return NextResponse.json(

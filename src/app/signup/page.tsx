@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { SignupForm } from "./SignupForm";
 
 export const dynamic = "force-dynamic";
@@ -13,10 +14,7 @@ export default function SignupPage() {
         
         <div className="relative z-10">
           <Link href="/" className="flex items-center gap-2 font-semibold">
-            <span className="grid h-10 w-10 place-items-center rounded-xl bg-white text-brand-600 shadow-lg">
-              <span className="text-xl font-bold">R</span>
-            </span>
-            <span className="font-display text-xl font-bold tracking-tight">ResumeForge</span>
+            <Image src="/logo.png" alt="JobDraftly" width={171} height={96} className="h-16 w-auto rounded-lg bg-white object-contain shadow-lg" priority />
           </Link>
         </div>
 
@@ -30,7 +28,7 @@ export default function SignupPage() {
         </div>
 
         <div className="relative z-10 text-sm opacity-80">
-          © {new Date().getFullYear()} ResumeForge. Join 10,000+ job seekers.
+          (c) {new Date().getFullYear()} JobDraftly. Join 10,000+ job seekers.
         </div>
       </div>
 
@@ -39,10 +37,7 @@ export default function SignupPage() {
         <div className="mx-auto w-full max-w-sm">
           <div className="mb-8 lg:hidden">
             <Link href="/" className="flex items-center gap-2 font-semibold text-brand-600">
-              <span className="grid h-8 w-8 place-items-center rounded-lg bg-brand-600 text-white shadow">
-                <span className="text-sm font-bold">R</span>
-              </span>
-              <span className="font-display text-lg font-bold tracking-tight">ResumeForge</span>
+              <Image src="/logo.png" alt="JobDraftly" width={149} height={84} className="h-14 w-auto rounded-md object-contain" priority />
             </Link>
           </div>
 

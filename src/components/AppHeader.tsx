@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { BILLING_ENABLED } from "@/lib/config";
 
 export function AppHeader({ email }: { email?: string | null }) {
@@ -9,10 +10,8 @@ export function AppHeader({ email }: { email?: string | null }) {
       <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-6">
         {/* Logo */}
         <Link href="/dashboard" className="flex items-center gap-2 font-semibold text-gray-900">
-          <span className="grid h-7 w-7 place-items-center rounded-lg bg-gradient-to-br from-brand-500 to-brand-700 text-xs font-bold text-white shadow">
-            R
-          </span>
-          <span className="font-display text-sm font-bold tracking-tight hidden sm:block">ResumeForge</span>
+          <Image src="/logo.png" alt="JobDraftly" width={128} height={72} className="h-9 w-auto rounded-md object-contain" priority />
+          <span className="sr-only">JobDraftly</span>
         </Link>
 
         {/* Nav */}

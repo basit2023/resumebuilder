@@ -7,7 +7,7 @@ import { OnboardingTour } from "@/components/OnboardingTour";
 
 const DASHBOARD_TOUR = [
   {
-    title: "Welcome to ResumeForge 👋",
+    title: "Welcome to JobDraftly",
     body: "Let's take 30 seconds to show you around. You can skip anytime — this only shows once.",
   },
   {

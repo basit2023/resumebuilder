@@ -95,7 +95,7 @@ export function LoginForm() {
               Signing in...
             </span>
           ) : (
-            "Sign in to ResumeForge"
+            "Sign in to JobDraftly"
           )}
         </button>
       </form>

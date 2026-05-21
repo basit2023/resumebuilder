@@ -2,14 +2,28 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "ResumeForge — AI-powered resumes that get interviews",
+  title: "JobDraftly - AI-powered resumes that get interviews",
   description:
     "Build, tailor, and download a beautiful ATS-friendly resume with AI. Powered by Claude. Free to start.",
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL ?? "https://www.jobdraftly.com"),
+  icons: {
+    icon: "/logo.png",
+    apple: "/logo.png",
+  },
   openGraph: {
-    title: "ResumeForge — AI-powered resumes that get interviews",
+    title: "JobDraftly - AI-powered resumes that get interviews",
     description: "Build, tailor, and download a beautiful ATS-friendly resume with AI.",
+    url: "https://www.jobdraftly.com",
+    siteName: "JobDraftly",
     type: "website",
+    images: [
+      {
+        url: "/logo.png",
+        width: 1366,
+        height: 768,
+        alt: "JobDraftly logo",
+      },
+    ],
   },
 };
 

@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { LoginForm } from "./LoginForm";
 
 export const dynamic = "force-dynamic";
@@ -14,24 +15,21 @@ export default function LoginPage() {
         
         <div className="relative z-10">
           <Link href="/" className="flex items-center gap-2 font-semibold">
-            <span className="grid h-10 w-10 place-items-center rounded-xl bg-white text-brand-600 shadow-lg">
-              <span className="text-xl font-bold">R</span>
-            </span>
-            <span className="font-display text-xl font-bold tracking-tight">ResumeForge</span>
+            <Image src="/logo.png" alt="JobDraftly" width={171} height={96} className="h-16 w-auto rounded-lg bg-white object-contain shadow-lg" priority />
           </Link>
         </div>
 
         <div className="relative z-10">
           <blockquote className="space-y-4">
             <p className="text-3xl font-medium leading-tight">
-              "ResumeForge helped me land my dream role at Notion. The AI-crafted bullets were exactly what recruiters were looking for."
+              "JobDraftly helped me land my dream role at Notion. The AI-crafted bullets were exactly what recruiters were looking for."
             </p>
             <footer className="text-lg font-semibold">— Priya N., Designer</footer>
           </blockquote>
         </div>
 
         <div className="relative z-10 text-sm opacity-80">
-          © {new Date().getFullYear()} ResumeForge. Built for ambitious professionals.
+          (c) {new Date().getFullYear()} JobDraftly. Built for ambitious professionals.
         </div>
       </div>
 
@@ -40,10 +38,7 @@ export default function LoginPage() {
         <div className="mx-auto w-full max-w-sm">
           <div className="mb-8 lg:hidden">
             <Link href="/" className="flex items-center gap-2 font-semibold text-brand-600">
-              <span className="grid h-8 w-8 place-items-center rounded-lg bg-brand-600 text-white shadow">
-                <span className="text-sm font-bold">R</span>
-              </span>
-              <span className="font-display text-lg font-bold tracking-tight">ResumeForge</span>
+              <Image src="/logo.png" alt="JobDraftly" width={149} height={84} className="h-14 w-auto rounded-md object-contain" priority />
             </Link>
           </div>
 
