@@ -1,7 +1,17 @@
+import type { Metadata } from "next";
 import { SiteHeader } from "@/components/SiteHeader";
+import { absoluteUrl } from "@/lib/seo";
 import { TemplatesBrowser } from "./TemplatesBrowser";
 
 export const dynamic = "force-dynamic";
+export const metadata: Metadata = {
+  title: "Resume Templates",
+  description:
+    "Browse ATS-friendly resume templates for modern, classic, compact, and custom resume formats.",
+  alternates: {
+    canonical: absoluteUrl("/templates"),
+  },
+};
 
 export default function TemplatesPage() {
   return (
