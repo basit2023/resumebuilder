@@ -1,9 +1,17 @@
 import { Suspense } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import type { Metadata } from "next";
 import { LoginForm } from "./LoginForm";
 
 export const dynamic = "force-dynamic";
+export const metadata: Metadata = {
+  title: "Sign In",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 export default function LoginPage() {
   return (

@@ -1,8 +1,16 @@
 import Link from "next/link";
 import Image from "next/image";
+import type { Metadata } from "next";
 import { SignupForm } from "./SignupForm";
 
 export const dynamic = "force-dynamic";
+export const metadata: Metadata = {
+  title: "Create Free Account",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 export default function SignupPage() {
   return (

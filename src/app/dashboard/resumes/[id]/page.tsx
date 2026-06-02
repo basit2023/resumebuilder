@@ -1,4 +1,5 @@
 import { notFound, redirect } from "next/navigation";
+import type { Metadata } from "next";
 import { createClient } from "@/lib/supabase/server";
 import { AppHeader } from "@/components/AppHeader";
 import { ResumeEditor } from "@/components/editor/ResumeEditor";
@@ -7,6 +8,13 @@ import type { Resume, ResumeData, TemplateId } from "@/lib/types";
 import { emptyResume, normalizeSkills } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
+export const metadata: Metadata = {
+  title: "Resume Editor",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 const EDITOR_TOUR = [
   {

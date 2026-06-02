@@ -31,7 +31,7 @@ export function SiteHeader({ authed }: { authed?: boolean }) {
 
         {/* Desktop nav */}
         <nav className="hidden items-center gap-1 text-sm md:flex">
-          <Link href="/#features" className="nav-link">Features</Link>
+          <Link href="/#workflow" className="nav-link">Features</Link>
           <Link href="/templates" className="nav-link">Templates</Link>
           {BILLING_ENABLED && <Link href="/pricing" className="nav-link">Pricing</Link>}
           <Link href="/review" className="nav-link">Expert Review</Link>
@@ -65,7 +65,7 @@ export function SiteHeader({ authed }: { authed?: boolean }) {
         <div className="border-t border-gray-100 bg-white px-6 py-4 shadow-lg md:hidden animate-slide-down">
           <nav className="flex flex-col gap-1">
             {[
-              { href: "/#features", label: "Features" },
+              { href: "/#workflow", label: "Features" },
               { href: "/templates", label: "Templates" },
               ...(BILLING_ENABLED ? [{ href: "/pricing", label: "Pricing" }] : []),
               { href: "/review", label: "Expert Review" },

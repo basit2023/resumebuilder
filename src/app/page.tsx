@@ -1,12 +1,41 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import { SiteHeader } from "@/components/SiteHeader";
+import { absoluteUrl } from "@/lib/seo";
 
-export const dynamic = "force-dynamic";
+export const metadata: Metadata = {
+  title: "Free AI Resume Builder and ATS Resume Checker",
+  description:
+    "Create an ATS-friendly resume for free with AI writing, job description tailoring, keyword suggestions, cover letters, and PDF or Word export.",
+  alternates: {
+    canonical: "/",
+  },
+};
 
 export default function HomePage() {
+  const softwareAppJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    name: "JobDraftly",
+    applicationCategory: "BusinessApplication",
+    operatingSystem: "Web",
+    url: absoluteUrl("/"),
+    description:
+      "A free AI resume builder with ATS resume checking, resume templates, job description tailoring, cover letters, and PDF or Word export.",
+    offers: {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "USD",
+    },
+  };
+
   return (
     <>
       <SiteHeader />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareAppJsonLd) }}
+      />
       <main className="bg-white">
         <section className="border-b border-gray-200 bg-[linear-gradient(180deg,#f8fbff_0%,#ffffff_78%)]">
           <div className="mx-auto grid min-h-[calc(100vh-4rem)] max-w-6xl items-center gap-12 px-6 py-16 lg:grid-cols-[1fr_0.95fr] lg:py-20">
@@ -87,13 +116,13 @@ export default function HomePage() {
         <section id="workflow" className="py-20">
           <div className="mx-auto max-w-6xl px-6">
             <div className="max-w-2xl">
-              <p className="text-xs font-semibold uppercase tracking-widest text-brand-600">Competitive workflow</p>
+              <p className="text-xs font-semibold uppercase tracking-widest text-brand-600">Resume builder workflow</p>
               <h2 className="mt-3 font-display text-4xl font-bold text-gray-950">
-                The tools top resume builders compete on, already in one flow.
+                AI resume writing, ATS checking, and job-specific tailoring in one flow.
               </h2>
               <p className="mt-4 text-gray-600">
-                Current leaders focus on AI writing, ATS optimization, job-specific tailoring, cover letters,
-                clean exports, and optional expert feedback. This product now presents that complete path clearly.
+                Build a resume from an ATS-safe template, improve each section with AI, compare it with a job description,
+                generate a matching cover letter, and export a clean PDF or Word file when you are ready to apply.
               </p>
             </div>
 

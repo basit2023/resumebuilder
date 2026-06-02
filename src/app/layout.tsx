@@ -1,21 +1,48 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { SITE_NAME, SITE_URL, absoluteUrl } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: "JobDraftly - AI-powered resumes that get interviews",
+  title: {
+    default: "JobDraftly - Free AI Resume Builder and ATS Resume Checker",
+    template: `%s | ${SITE_NAME}`,
+  },
   description:
-    "Build, tailor, and download a beautiful ATS-friendly resume with AI. Powered by Claude. Free to start.",
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL ?? "https://www.jobdraftly.com"),
+    "Build an ATS-friendly resume with AI, tailor it to job descriptions, check resume keywords, and download polished PDF or Word files for free.",
+  metadataBase: new URL(SITE_URL),
+  alternates: {
+    canonical: "/",
+  },
+  keywords: [
+    "AI resume builder",
+    "free resume builder",
+    "ATS resume checker",
+    "resume templates",
+    "cover letter generator",
+    "job description resume tailoring",
+  ],
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
   icons: {
     icon: "/logo.png",
     apple: "/logo.png",
   },
   openGraph: {
-    title: "JobDraftly - AI-powered resumes that get interviews",
-    description: "Build, tailor, and download a beautiful ATS-friendly resume with AI.",
-    url: "https://www.jobdraftly.com",
-    siteName: "JobDraftly",
+    title: "JobDraftly - Free AI Resume Builder and ATS Resume Checker",
+    description: "Build, tailor, check, and download an ATS-friendly resume with AI.",
+    url: absoluteUrl("/"),
+    siteName: SITE_NAME,
     type: "website",
+    locale: "en_US",
     images: [
       {
         url: "/logo.png",
@@ -24,6 +51,12 @@ export const metadata: Metadata = {
         alt: "JobDraftly logo",
       },
     ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "JobDraftly - Free AI Resume Builder and ATS Resume Checker",
+    description: "Build, tailor, check, and download an ATS-friendly resume with AI.",
+    images: ["/logo.png"],
   },
 };
 

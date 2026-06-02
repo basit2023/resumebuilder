@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import type { Metadata } from "next";
 import { createClient } from "@/lib/supabase/server";
 import { AppHeader } from "@/components/AppHeader";
 import { NewResumeButton } from "./NewResumeButton";
@@ -37,6 +38,13 @@ const DASHBOARD_TOUR = [
 ];
 
 export const dynamic = "force-dynamic";
+export const metadata: Metadata = {
+  title: "Dashboard",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 const TEMPLATE_STYLES: Record<string, { bg: string; badge: string; dot: string }> = {
   modern:  { bg: "bg-gradient-to-br from-brand-50 to-brand-100",   badge: "badge-brand",  dot: "bg-brand-500" },

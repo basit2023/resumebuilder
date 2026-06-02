@@ -1,9 +1,17 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import { SiteHeader } from "@/components/SiteHeader";
 import { UpgradeButton } from "./UpgradeButton";
 import { BILLING_ENABLED } from "@/lib/config";
 
-export const dynamic = "force-dynamic";
+export const metadata: Metadata = {
+  title: "Pricing",
+  description:
+    "Start using JobDraftly for free during early access. Build resumes, tailor them to job descriptions, check ATS match, and export PDF or Word files.",
+  alternates: {
+    canonical: "/pricing",
+  },
+};
 
 export default function PricingPage() {
   // Early-access mode: no paid plans shown — everything is free.

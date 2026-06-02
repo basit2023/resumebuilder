@@ -1,10 +1,19 @@
 import { redirect } from "next/navigation";
+import type { Metadata } from "next";
 import { createClient } from "@/lib/supabase/server";
 import { AppHeader } from "@/components/AppHeader";
 import { SiteHeader } from "@/components/SiteHeader";
 import { RequestReviewForm } from "./RequestReviewForm";
 
 export const dynamic = "force-dynamic";
+export const metadata: Metadata = {
+  title: "Expert Resume Review",
+  description:
+    "Request expert resume feedback for stronger bullets, clearer sections, ATS readiness, and role-specific application advice.",
+  alternates: {
+    canonical: "/review",
+  },
+};
 
 export default async function ReviewPage() {
   const supabase = createClient();
