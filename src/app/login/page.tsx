@@ -1,7 +1,12 @@
 import { Suspense } from "react";
 import Link from "next/link";
+<<<<<<< HEAD
 import Image from "next/image";
 import type { Metadata } from "next";
+=======
+import type { Metadata } from "next";
+import { BrandLogo } from "@/components/BrandLogo";
+>>>>>>> 7904d3ff5e8fda86e42ae520ce2e4b8126f11d76
 import { LoginForm } from "./LoginForm";
 
 export const dynamic = "force-dynamic";
@@ -23,7 +28,7 @@ export default function LoginPage() {
         
         <div className="relative z-10">
           <Link href="/" className="flex items-center gap-2 font-semibold">
-            <Image src="/logo.png" alt="JobDraftly" width={171} height={96} className="h-16 w-auto rounded-lg bg-white object-contain shadow-lg" priority />
+            <BrandLogo inverse markClassName="h-11 w-11 from-white to-white text-brand-700" textClassName="text-2xl" />
           </Link>
         </div>
 
@@ -46,7 +51,7 @@ export default function LoginPage() {
         <div className="mx-auto w-full max-w-sm">
           <div className="mb-8 lg:hidden">
             <Link href="/" className="flex items-center gap-2 font-semibold text-brand-600">
-              <Image src="/logo.png" alt="JobDraftly" width={149} height={84} className="h-14 w-auto rounded-md object-contain" priority />
+              <BrandLogo markClassName="h-10 w-10" />
             </Link>
           </div>
 

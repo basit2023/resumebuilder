@@ -1,13 +1,24 @@
 import type { Metadata } from "next";
 import { SiteHeader } from "@/components/SiteHeader";
+import { absoluteUrl } from "@/lib/seo";
 import { TemplatesBrowser } from "./TemplatesBrowser";
 
+<<<<<<< HEAD
 export const metadata: Metadata = {
   title: "ATS Resume Templates for US, UK, EU, Canada, India and More",
   description:
     "Browse editable ATS-friendly resume templates by country, format, and role. Start with a modern, classic, compact, or custom resume layout.",
   alternates: {
     canonical: "/templates",
+=======
+export const dynamic = "force-dynamic";
+export const metadata: Metadata = {
+  title: "Resume Templates",
+  description:
+    "Browse ATS-friendly resume templates for modern, classic, compact, and custom resume formats.",
+  alternates: {
+    canonical: absoluteUrl("/templates"),
+>>>>>>> 7904d3ff5e8fda86e42ae520ce2e4b8126f11d76
   },
 };
 

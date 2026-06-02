@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { SiteHeader } from "@/components/SiteHeader";
+<<<<<<< HEAD
 import { absoluteUrl } from "@/lib/seo";
 
 export const metadata: Metadata = {
@@ -9,10 +10,19 @@ export const metadata: Metadata = {
     "Create an ATS-friendly resume for free with AI writing, job description tailoring, keyword suggestions, cover letters, and PDF or Word export.",
   alternates: {
     canonical: "/",
+=======
+import { absoluteUrl, SITE_DESCRIPTION, SITE_NAME } from "@/lib/seo";
+
+export const dynamic = "force-dynamic";
+export const metadata: Metadata = {
+  alternates: {
+    canonical: absoluteUrl("/"),
+>>>>>>> 7904d3ff5e8fda86e42ae520ce2e4b8126f11d76
   },
 };
 
 export default function HomePage() {
+<<<<<<< HEAD
   const softwareAppJsonLd = {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
@@ -22,6 +32,16 @@ export default function HomePage() {
     url: absoluteUrl("/"),
     description:
       "A free AI resume builder with ATS resume checking, resume templates, job description tailoring, cover letters, and PDF or Word export.",
+=======
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    name: SITE_NAME,
+    applicationCategory: "BusinessApplication",
+    operatingSystem: "Web",
+    url: absoluteUrl("/"),
+    description: SITE_DESCRIPTION,
+>>>>>>> 7904d3ff5e8fda86e42ae520ce2e4b8126f11d76
     offers: {
       "@type": "Offer",
       price: "0",
@@ -34,7 +54,11 @@ export default function HomePage() {
       <SiteHeader />
       <script
         type="application/ld+json"
+<<<<<<< HEAD
         dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareAppJsonLd) }}
+=======
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+>>>>>>> 7904d3ff5e8fda86e42ae520ce2e4b8126f11d76
       />
       <main className="bg-white">
         <section className="border-b border-gray-200 bg-[linear-gradient(180deg,#f8fbff_0%,#ffffff_78%)]">

@@ -4,14 +4,21 @@ import { createClient } from "@/lib/supabase/server";
 import { AppHeader } from "@/components/AppHeader";
 import { SiteHeader } from "@/components/SiteHeader";
 import { RequestReviewForm } from "./RequestReviewForm";
+import { absoluteUrl } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
   title: "Expert Resume Review",
   description:
+<<<<<<< HEAD
     "Request expert resume feedback for stronger bullets, clearer sections, ATS readiness, and role-specific application advice.",
   alternates: {
     canonical: "/review",
+=======
+    "Request an expert resume review with recruiter feedback, rewritten bullets, and practical notes for improving your job application.",
+  alternates: {
+    canonical: absoluteUrl("/review"),
+>>>>>>> 7904d3ff5e8fda86e42ae520ce2e4b8126f11d76
   },
 };
 
@@ -24,7 +31,7 @@ export default async function ReviewPage() {
       <>
         <SiteHeader />
         <main className="mx-auto max-w-2xl px-6 py-16 text-center">
-          <h1 className="text-3xl font-bold">Expert resume review — $49</h1>
+          <h1 className="text-3xl font-bold">Expert resume review - $49</h1>
           <p className="mt-3 text-gray-600">
             A senior recruiter rewrites bullets, flags weak sections, and returns inline notes within 48 hours.
           </p>
@@ -50,7 +57,7 @@ export default async function ReviewPage() {
       <main className="mx-auto max-w-3xl px-6 py-10">
         <h1 className="text-2xl font-bold">Expert review</h1>
         <p className="text-sm text-gray-600">
-          Request a 48-hour review from a senior recruiter. Beta: human delivery is queued — first
+          Request a 48-hour review from a senior recruiter. Beta: human delivery is queued - first
           5 reviews are free while we onboard reviewers.
         </p>
 

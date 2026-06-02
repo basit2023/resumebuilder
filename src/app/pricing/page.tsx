@@ -3,18 +3,29 @@ import type { Metadata } from "next";
 import { SiteHeader } from "@/components/SiteHeader";
 import { UpgradeButton } from "./UpgradeButton";
 import { BILLING_ENABLED } from "@/lib/config";
+import { absoluteUrl } from "@/lib/seo";
 
+<<<<<<< HEAD
 export const metadata: Metadata = {
   title: "Pricing",
   description:
     "Start using JobDraftly for free during early access. Build resumes, tailor them to job descriptions, check ATS match, and export PDF or Word files.",
   alternates: {
     canonical: "/pricing",
+=======
+export const dynamic = "force-dynamic";
+export const metadata: Metadata = {
+  title: "Pricing",
+  description:
+    "See JobDraftly pricing for AI resume building, job tailoring, cover letters, ATS scoring, and expert resume review.",
+  alternates: {
+    canonical: absoluteUrl("/pricing"),
+>>>>>>> 7904d3ff5e8fda86e42ae520ce2e4b8126f11d76
   },
 };
 
 export default function PricingPage() {
-  // Early-access mode: no paid plans shown — everything is free.
+  // Early-access mode: no paid plans shown - everything is free.
   if (!BILLING_ENABLED) {
     return (
       <>
@@ -22,14 +33,14 @@ export default function PricingPage() {
         <main className="hero-mesh pb-24">
           <div className="mx-auto max-w-2xl px-6 py-24 text-center">
             <span className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 py-1.5 text-xs font-semibold text-emerald-700">
-              ✨ Early access — everything free
+              Early access - everything free
             </span>
             <h1 className="mt-5 font-display text-5xl font-bold text-gray-900">
               It&apos;s all free right now.
             </h1>
             <p className="mx-auto mt-4 max-w-xl text-gray-500">
-              JobDraftly is in early access. Every feature — unlimited resumes, AI tailoring,
-              cover letters, ATS scoring, all templates — is completely free while we grow.
+              JobDraftly is in early access. Every feature - unlimited resumes, AI tailoring,
+              cover letters, ATS scoring, all templates - is completely free while we grow.
               No card, no catch.
             </p>
             <Link
@@ -47,7 +58,7 @@ export default function PricingPage() {
                 "PDF & Word export",
               ].map((f) => (
                 <li key={f} className="flex items-start gap-2.5">
-                  <span className="mt-0.5 shrink-0 text-emerald-500">✓</span>
+                  <span className="mt-0.5 shrink-0 text-emerald-500">{"\u2713"}</span>
                   {f}
                 </li>
               ))}
@@ -108,7 +119,7 @@ export default function PricingPage() {
                 <ul className="mt-6 flex-1 space-y-3 text-sm">
                   {p.features.map((f) => (
                     <li key={f} className="flex items-start gap-2.5 text-gray-700">
-                      <span className="mt-0.5 shrink-0 text-brand-500">✓</span>
+                      <span className="mt-0.5 shrink-0 text-brand-500">{"\u2713"}</span>
                       {f}
                     </li>
                   ))}
@@ -139,7 +150,7 @@ export default function PricingPage() {
 
           {/* Comparison note */}
           <p className="mt-10 text-center text-sm text-gray-400">
-            All plans include ATS-safe PDF export · Powered by Claude · Cancel any time
+            All plans include ATS-safe PDF export - Powered by Claude - Cancel any time
           </p>
 
           {/* FAQ */}
@@ -220,7 +231,7 @@ const PLANS = [
 
 const FAQ = [
   { q: "Can I cancel my Pro subscription any time?", a: "Yes. Cancel from your dashboard settings. You keep Pro access until the end of your billing period." },
-  { q: "Does the free plan ever expire?", a: "No — the free tier is free forever. You keep your 1 resume and 10 monthly AI generations as long as you have an account." },
+  { q: "Does the free plan ever expire?", a: "No - the free tier is free forever. You keep your 1 resume and 10 monthly AI generations as long as you have an account." },
   { q: "What payment methods are accepted?", a: "All major credit and debit cards via Stripe. We never store your card details." },
   { q: "Is my data safe?", a: "Yes. All resume data is stored with row-level security on Supabase. We never sell or share your information." },
 ];

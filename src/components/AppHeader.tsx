@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Image from "next/image";
+import { BrandLogo } from "@/components/BrandLogo";
 import { BILLING_ENABLED } from "@/lib/config";
 
 export function AppHeader({ email }: { email?: string | null }) {
@@ -10,7 +10,7 @@ export function AppHeader({ email }: { email?: string | null }) {
       <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-6">
         {/* Logo */}
         <Link href="/dashboard" className="flex items-center gap-2 font-semibold text-gray-900">
-          <Image src="/logo.png" alt="JobDraftly" width={128} height={72} className="h-9 w-auto rounded-md object-contain" priority />
+          <BrandLogo markClassName="h-8 w-8 rounded-lg" textClassName="text-lg" />
           <span className="sr-only">JobDraftly</span>
         </Link>
 

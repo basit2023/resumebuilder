@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import Image from "next/image";
+import { BrandLogo } from "@/components/BrandLogo";
 import { BILLING_ENABLED } from "@/lib/config";
 
 export function SiteHeader({ authed }: { authed?: boolean }) {
@@ -25,7 +25,7 @@ export function SiteHeader({ authed }: { authed?: boolean }) {
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2.5 font-semibold text-gray-900">
-          <Image src="/logo.png" alt="JobDraftly" width={142} height={80} className="h-10 w-auto rounded-md object-contain" priority />
+          <BrandLogo />
           <span className="sr-only">JobDraftly</span>
         </Link>
 
