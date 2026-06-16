@@ -5,22 +5,12 @@ import { UpgradeButton } from "./UpgradeButton";
 import { BILLING_ENABLED } from "@/lib/config";
 import { absoluteUrl } from "@/lib/seo";
 
-<<<<<<< HEAD
 export const metadata: Metadata = {
-  title: "Pricing",
+  title: "Free AI Resume Builder Pricing",
   description:
     "Start using JobDraftly for free during early access. Build resumes, tailor them to job descriptions, check ATS match, and export PDF or Word files.",
   alternates: {
-    canonical: "/pricing",
-=======
-export const dynamic = "force-dynamic";
-export const metadata: Metadata = {
-  title: "Pricing",
-  description:
-    "See JobDraftly pricing for AI resume building, job tailoring, cover letters, ATS scoring, and expert resume review.",
-  alternates: {
     canonical: absoluteUrl("/pricing"),
->>>>>>> 7904d3ff5e8fda86e42ae520ce2e4b8126f11d76
   },
 };
 

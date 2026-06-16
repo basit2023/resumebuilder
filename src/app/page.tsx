@@ -1,39 +1,19 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { SiteHeader } from "@/components/SiteHeader";
-<<<<<<< HEAD
-import { absoluteUrl } from "@/lib/seo";
+import { absoluteUrl, SITE_DESCRIPTION, SITE_NAME, TARGET_REGIONS } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Free AI Resume Builder and ATS Resume Checker",
   description:
     "Create an ATS-friendly resume for free with AI writing, job description tailoring, keyword suggestions, cover letters, and PDF or Word export.",
   alternates: {
-    canonical: "/",
-=======
-import { absoluteUrl, SITE_DESCRIPTION, SITE_NAME } from "@/lib/seo";
-
-export const dynamic = "force-dynamic";
-export const metadata: Metadata = {
-  alternates: {
     canonical: absoluteUrl("/"),
->>>>>>> 7904d3ff5e8fda86e42ae520ce2e4b8126f11d76
   },
 };
 
 export default function HomePage() {
-<<<<<<< HEAD
   const softwareAppJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    name: "JobDraftly",
-    applicationCategory: "BusinessApplication",
-    operatingSystem: "Web",
-    url: absoluteUrl("/"),
-    description:
-      "A free AI resume builder with ATS resume checking, resume templates, job description tailoring, cover letters, and PDF or Word export.",
-=======
-  const jsonLd = {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
     name: SITE_NAME,
@@ -41,7 +21,15 @@ export default function HomePage() {
     operatingSystem: "Web",
     url: absoluteUrl("/"),
     description: SITE_DESCRIPTION,
->>>>>>> 7904d3ff5e8fda86e42ae520ce2e4b8126f11d76
+    featureList: [
+      "AI resume writing",
+      "ATS resume score",
+      "Job description resume tailoring",
+      "Resume keyword suggestions",
+      "Cover letter generator",
+      "PDF and Word resume export",
+    ],
+    areaServed: TARGET_REGIONS,
     offers: {
       "@type": "Offer",
       price: "0",
@@ -49,16 +37,71 @@ export default function HomePage() {
     },
   };
 
+  const organizationJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: SITE_NAME,
+    url: absoluteUrl("/"),
+    logo: absoluteUrl("/logo.png"),
+  };
+
+  const websiteJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: SITE_NAME,
+    url: absoluteUrl("/"),
+    description: SITE_DESCRIPTION,
+  };
+
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: FAQS.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.answer,
+      },
+    })),
+  };
+
+  const howToJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    name: "How to build an ATS-friendly resume with JobDraftly",
+    description:
+      "Use JobDraftly to choose an ATS-safe template, write resume content with AI, tailor it to a job description, check missing keywords, and export a PDF or Word resume.",
+    step: HOW_TO_STEPS.map((step, index) => ({
+      "@type": "HowToStep",
+      position: index + 1,
+      name: step.title,
+      text: step.body,
+    })),
+  };
+
   return (
     <>
       <SiteHeader />
       <script
         type="application/ld+json"
-<<<<<<< HEAD
         dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareAppJsonLd) }}
-=======
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
->>>>>>> 7904d3ff5e8fda86e42ae520ce2e4b8126f11d76
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(howToJsonLd) }}
       />
       <main className="bg-white">
         <section className="border-b border-gray-200 bg-[linear-gradient(180deg,#f8fbff_0%,#ffffff_78%)]">
@@ -239,6 +282,56 @@ export default function HomePage() {
           </div>
         </section>
 
+        <section className="border-y border-gray-200 bg-white py-20">
+          <div className="mx-auto grid max-w-6xl gap-12 px-6 lg:grid-cols-[0.9fr_1.1fr]">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-widest text-brand-600">How it works</p>
+              <h2 className="mt-3 font-display text-4xl font-bold text-gray-950">
+                From blank page to ATS-friendly resume in minutes.
+              </h2>
+              <p className="mt-4 leading-7 text-gray-600">
+                JobDraftly is built for job seekers who need a resume that reads well to recruiters
+                and stays easy for applicant tracking systems to parse across the US, Canada, UK,
+                Europe, India, and remote hiring markets.
+              </p>
+            </div>
+            <ol className="grid gap-4">
+              {HOW_TO_STEPS.map((step, index) => (
+                <li key={step.title} className="rounded-xl border border-gray-200 bg-slate-50 p-5">
+                  <div className="flex gap-4">
+                    <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-brand-600 text-sm font-bold text-white">
+                      {index + 1}
+                    </span>
+                    <div>
+                      <h3 className="font-bold text-gray-950">{step.title}</h3>
+                      <p className="mt-1 text-sm leading-6 text-gray-600">{step.body}</p>
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
+
+        <section className="bg-slate-50 py-20">
+          <div className="mx-auto max-w-4xl px-6">
+            <div className="text-center">
+              <p className="text-xs font-semibold uppercase tracking-widest text-brand-600">Resume builder FAQ</p>
+              <h2 className="mt-3 font-display text-4xl font-bold text-gray-950">
+                Answers job seekers search for before they apply.
+              </h2>
+            </div>
+            <div className="mt-10 grid gap-4">
+              {FAQS.map((faq) => (
+                <details key={faq.question} className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+                  <summary className="cursor-pointer font-bold text-gray-950">{faq.question}</summary>
+                  <p className="mt-3 text-sm leading-6 text-gray-600">{faq.answer}</p>
+                </details>
+              ))}
+            </div>
+          </div>
+        </section>
+
         <section className="px-6 pb-20">
           <div className="mx-auto max-w-5xl rounded-[2rem] bg-gray-950 px-6 py-12 text-center text-white shadow-pop md:px-12">
             <h2 className="font-display text-4xl font-bold">Create your strongest resume version today.</h2>
@@ -343,5 +436,52 @@ const OUTCOMES = [
     metric: "4 modes",
     title: "Template flexibility",
     body: "Modern, classic, compact, and custom modes cover practical candidate needs.",
+  },
+];
+
+const HOW_TO_STEPS = [
+  {
+    title: "Choose an ATS-safe resume template",
+    body: "Start with a modern, classic, compact, or custom format that keeps sections readable for recruiters and applicant tracking systems.",
+  },
+  {
+    title: "Write stronger resume content with AI",
+    body: "Generate a summary, improve bullet points, and turn responsibilities into clearer achievements with measurable impact.",
+  },
+  {
+    title: "Tailor the resume to a job description",
+    body: "Paste the job description to compare keywords, skills, responsibilities, and seniority signals against your current resume.",
+  },
+  {
+    title: "Export a polished PDF or Word file",
+    body: "Download the final resume as a clean PDF for applications or as an editable Word document when an employer requests DOCX.",
+  },
+];
+
+const FAQS = [
+  {
+    question: "What is the best free AI resume builder for ATS-friendly resumes?",
+    answer:
+      "JobDraftly is a free AI resume builder focused on ATS-friendly resumes. It combines structured templates, AI writing help, resume keyword suggestions, job description tailoring, cover letter generation, and PDF or Word export.",
+  },
+  {
+    question: "Can JobDraftly check whether my resume matches a job description?",
+    answer:
+      "Yes. Paste a job description and JobDraftly shows a resume match score, missing keywords, strengths, and gaps so you can improve the resume before applying.",
+  },
+  {
+    question: "Does JobDraftly create resumes for different countries?",
+    answer:
+      "Yes. JobDraftly supports practical resume formats for job seekers applying in the United States, Canada, United Kingdom, Europe, India, and remote roles.",
+  },
+  {
+    question: "Can I download my resume as both PDF and Word?",
+    answer:
+      "Yes. JobDraftly lets you export a polished PDF resume and an editable Word file, so you can use the format requested by each employer or job board.",
+  },
+  {
+    question: "Does JobDraftly also generate cover letters?",
+    answer:
+      "Yes. The cover letter generator uses your resume and the job description context to create a focused draft that matches the role you are applying for.",
   },
 ];

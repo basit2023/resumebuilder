@@ -1,12 +1,7 @@
 import { Suspense } from "react";
 import Link from "next/link";
-<<<<<<< HEAD
-import Image from "next/image";
-import type { Metadata } from "next";
-=======
 import type { Metadata } from "next";
 import { BrandLogo } from "@/components/BrandLogo";
->>>>>>> 7904d3ff5e8fda86e42ae520ce2e4b8126f11d76
 import { LoginForm } from "./LoginForm";
 
 export const dynamic = "force-dynamic";
@@ -21,11 +16,10 @@ export const metadata: Metadata = {
 export default function LoginPage() {
   return (
     <main className="flex min-h-screen">
-      {/* Left side: Content & Branding */}
       <div className="relative hidden w-1/2 flex-col justify-between bg-brand-600 p-12 text-white lg:flex">
         <div className="absolute inset-0 bg-gradient-to-br from-brand-600 to-purple-700 opacity-90" />
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10" />
-        
+
         <div className="relative z-10">
           <Link href="/" className="flex items-center gap-2 font-semibold">
             <BrandLogo inverse markClassName="h-11 w-11 from-white to-white text-brand-700" textClassName="text-2xl" />
@@ -35,9 +29,9 @@ export default function LoginPage() {
         <div className="relative z-10">
           <blockquote className="space-y-4">
             <p className="text-3xl font-medium leading-tight">
-              "JobDraftly helped me land my dream role at Notion. The AI-crafted bullets were exactly what recruiters were looking for."
+              "JobDraftly helped me land my dream role. The AI-crafted bullets were exactly what recruiters were looking for."
             </p>
-            <footer className="text-lg font-semibold">— Priya N., Designer</footer>
+            <footer className="text-lg font-semibold">- Priya N., Designer</footer>
           </blockquote>
         </div>
 
@@ -46,8 +40,7 @@ export default function LoginPage() {
         </div>
       </div>
 
-      {/* Right side: Login Form */}
-      <div className="flex w-full flex-col justify-center px-6 py-12 lg:w-1/2 lg:px-24 xl:px-32 bg-white">
+      <div className="flex w-full flex-col justify-center bg-white px-6 py-12 lg:w-1/2 lg:px-24 xl:px-32">
         <div className="mx-auto w-full max-w-sm">
           <div className="mb-8 lg:hidden">
             <Link href="/" className="flex items-center gap-2 font-semibold text-brand-600">
@@ -61,13 +54,15 @@ export default function LoginPage() {
           </div>
 
           <div className="mt-8">
-            <Suspense fallback={
-              <div className="space-y-4 animate-pulse">
-                <div className="h-10 bg-gray-100 rounded-xl" />
-                <div className="h-10 bg-gray-100 rounded-xl" />
-                <div className="h-12 bg-brand-100 rounded-xl" />
-              </div>
-            }>
+            <Suspense
+              fallback={
+                <div className="animate-pulse space-y-4">
+                  <div className="h-10 rounded-xl bg-gray-100" />
+                  <div className="h-10 rounded-xl bg-gray-100" />
+                  <div className="h-12 rounded-xl bg-brand-100" />
+                </div>
+              }
+            >
               <LoginForm />
             </Suspense>
           </div>

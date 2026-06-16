@@ -1,20 +1,11 @@
 import Link from "next/link";
-<<<<<<< HEAD
-import Image from "next/image";
-import type { Metadata } from "next";
-=======
 import type { Metadata } from "next";
 import { BrandLogo } from "@/components/BrandLogo";
->>>>>>> 7904d3ff5e8fda86e42ae520ce2e4b8126f11d76
 import { SignupForm } from "./SignupForm";
 
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
-<<<<<<< HEAD
-  title: "Create Free Account",
-=======
   title: "Create Your Free Account",
->>>>>>> 7904d3ff5e8fda86e42ae520ce2e4b8126f11d76
   robots: {
     index: false,
     follow: false,
@@ -24,11 +15,10 @@ export const metadata: Metadata = {
 export default function SignupPage() {
   return (
     <main className="flex min-h-screen">
-      {/* Left side: Content & Branding */}
       <div className="relative hidden w-1/2 flex-col justify-between bg-brand-600 p-12 text-white lg:flex">
         <div className="absolute inset-0 bg-gradient-to-br from-brand-600 to-purple-700 opacity-90" />
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10" />
-        
+
         <div className="relative z-10">
           <Link href="/" className="flex items-center gap-2 font-semibold">
             <BrandLogo inverse markClassName="h-11 w-11 from-white to-white text-brand-700" textClassName="text-2xl" />
@@ -40,7 +30,7 @@ export default function SignupPage() {
             <p className="text-3xl font-medium leading-tight">
               "The tailoring feature is a game changer. I used to spend hours on each application, now it takes 60 seconds."
             </p>
-            <footer className="text-lg font-semibold">— Aisha R., Software Engineer</footer>
+            <footer className="text-lg font-semibold">- Aisha R., Software Engineer</footer>
           </blockquote>
         </div>
 
@@ -49,8 +39,7 @@ export default function SignupPage() {
         </div>
       </div>
 
-      {/* Right side: Signup Form */}
-      <div className="flex w-full flex-col justify-center px-6 py-12 lg:w-1/2 lg:px-24 xl:px-32 bg-white">
+      <div className="flex w-full flex-col justify-center bg-white px-6 py-12 lg:w-1/2 lg:px-24 xl:px-32">
         <div className="mx-auto w-full max-w-sm">
           <div className="mb-8 lg:hidden">
             <Link href="/" className="flex items-center gap-2 font-semibold text-brand-600">
@@ -66,7 +55,7 @@ export default function SignupPage() {
           <div className="mt-8">
             <SignupForm />
           </div>
-          
+
           <p className="mt-8 text-center text-xs text-gray-400">
             By signing up, you agree to our{" "}
             <Link href="/terms" className="underline hover:text-gray-600">Terms of Service</Link> and{" "}

@@ -1,58 +1,26 @@
 import type { Metadata } from "next";
-import { absoluteUrl, SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/seo";
+import { absoluteUrl, SITE_DESCRIPTION, SITE_NAME, SITE_TAGLINE, SITE_URL } from "@/lib/seo";
 import "./globals.css";
-import { SITE_NAME, SITE_URL, absoluteUrl } from "@/lib/seo";
 
 export const metadata: Metadata = {
-<<<<<<< HEAD
-  title: {
-    default: "JobDraftly - Free AI Resume Builder and ATS Resume Checker",
-    template: `%s | ${SITE_NAME}`,
-  },
-  description:
-    "Build an ATS-friendly resume with AI, tailor it to job descriptions, check resume keywords, and download polished PDF or Word files for free.",
-  metadataBase: new URL(SITE_URL),
-  alternates: {
-    canonical: "/",
-  },
-  keywords: [
-    "AI resume builder",
-    "free resume builder",
-    "ATS resume checker",
-    "resume templates",
-    "cover letter generator",
-    "job description resume tailoring",
-  ],
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-      "max-video-preview": -1,
-    },
-  },
-  icons: {
-    icon: "/logo.png",
-    apple: "/logo.png",
-=======
   metadataBase: new URL(SITE_URL),
   applicationName: SITE_NAME,
   title: {
-    default: "JobDraftly - AI Resume Builder for ATS-Friendly Applications",
+    default: `${SITE_NAME} - ${SITE_TAGLINE}`,
     template: `%s | ${SITE_NAME}`,
->>>>>>> 7904d3ff5e8fda86e42ae520ce2e4b8126f11d76
   },
   description: SITE_DESCRIPTION,
   keywords: [
     "AI resume builder",
-    "ATS resume builder",
+    "free resume builder",
+    "ATS resume checker",
+    "ATS friendly resume",
+    "resume keyword scanner",
     "resume templates",
     "cover letter generator",
-    "resume checker",
-    "job description tailoring",
+    "job description resume tailoring",
+    "PDF resume builder",
+    "Word resume builder",
   ],
   alternates: {
     canonical: absoluteUrl("/"),
@@ -63,13 +31,8 @@ export const metadata: Metadata = {
   },
   manifest: "/manifest.webmanifest",
   openGraph: {
-<<<<<<< HEAD
-    title: "JobDraftly - Free AI Resume Builder and ATS Resume Checker",
-    description: "Build, tailor, check, and download an ATS-friendly resume with AI.",
-=======
-    title: "JobDraftly - AI Resume Builder for ATS-Friendly Applications",
+    title: `${SITE_NAME} - ${SITE_TAGLINE}`,
     description: SITE_DESCRIPTION,
->>>>>>> 7904d3ff5e8fda86e42ae520ce2e4b8126f11d76
     url: absoluteUrl("/"),
     siteName: SITE_NAME,
     type: "website",
@@ -79,18 +42,13 @@ export const metadata: Metadata = {
         url: "/opengraph-image",
         width: 1200,
         height: 630,
-        alt: "JobDraftly AI resume builder preview",
+        alt: "JobDraftly AI resume builder and ATS checker preview",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-<<<<<<< HEAD
-    title: "JobDraftly - Free AI Resume Builder and ATS Resume Checker",
-    description: "Build, tailor, check, and download an ATS-friendly resume with AI.",
-    images: ["/logo.png"],
-=======
-    title: "JobDraftly - AI Resume Builder for ATS-Friendly Applications",
+    title: `${SITE_NAME} - ${SITE_TAGLINE}`,
     description: SITE_DESCRIPTION,
     images: ["/opengraph-image"],
   },
@@ -104,7 +62,6 @@ export const metadata: Metadata = {
       "max-snippet": -1,
       "max-video-preview": -1,
     },
->>>>>>> 7904d3ff5e8fda86e42ae520ce2e4b8126f11d76
   },
 };
 

@@ -8,17 +8,11 @@ import { absoluteUrl } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
-  title: "Expert Resume Review",
+  title: "Expert Resume Review for ATS and Recruiter Feedback",
   description:
-<<<<<<< HEAD
     "Request expert resume feedback for stronger bullets, clearer sections, ATS readiness, and role-specific application advice.",
   alternates: {
-    canonical: "/review",
-=======
-    "Request an expert resume review with recruiter feedback, rewritten bullets, and practical notes for improving your job application.",
-  alternates: {
     canonical: absoluteUrl("/review"),
->>>>>>> 7904d3ff5e8fda86e42ae520ce2e4b8126f11d76
   },
 };
 
