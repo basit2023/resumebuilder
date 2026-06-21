@@ -6,8 +6,8 @@ export default function robots(): MetadataRoute.Robots {
     rules: [
       {
         userAgent: "*",
-        allow: ["/", "/templates", "/review", "/pricing", "/llms.txt", "/opengraph-image"],
-        disallow: ["/api/", "/auth/", "/dashboard/", "/login", "/signup", "/logout"],
+        allow: "/",
+        disallow: ["/api/", "/auth/", "/dashboard/", "/account/", "/settings/", "/login", "/signup", "/logout"],
       },
     ],
     sitemap: absoluteUrl("/sitemap.xml"),

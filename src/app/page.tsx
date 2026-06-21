@@ -10,6 +10,19 @@ export const metadata: Metadata = {
   alternates: {
     canonical: absoluteUrl("/"),
   },
+  openGraph: {
+    title: "Free AI Resume Builder and ATS Resume Checker",
+    description:
+      "Create an ATS-friendly resume for free with AI writing, job description tailoring, keyword suggestions, cover letters, and PDF or Word export.",
+    url: absoluteUrl("/"),
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Free AI Resume Builder and ATS Resume Checker",
+    description:
+      "Create an ATS-friendly resume for free with AI writing, job description tailoring, keyword suggestions, cover letters, and PDF or Word export.",
+  },
 };
 
 export default function HomePage() {
@@ -207,6 +220,31 @@ export default function HomePage() {
           </div>
         </section>
 
+        <section className="border-y border-gray-200 bg-white py-20">
+          <div className="mx-auto max-w-6xl px-6">
+            <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-widest text-brand-600">Explore JobDraftly tools</p>
+                <h2 className="mt-3 font-display text-4xl font-bold text-gray-950">
+                  Public resume tools for every application step.
+                </h2>
+              </div>
+              <Link href="/pricing" className="btn-secondary">
+                View pricing
+              </Link>
+            </div>
+
+            <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {EXPLORE_TOOLS.map((tool) => (
+                <Link key={tool.href} href={tool.href} className="feature-card">
+                  <h3 className="text-lg font-bold text-gray-950">{tool.title}</h3>
+                  <p className="mt-2 text-sm leading-6 text-gray-600">{tool.body}</p>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+
         <section id="templates" className="border-y border-gray-200 bg-slate-50 py-20">
           <div className="mx-auto max-w-6xl px-6">
             <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end">
@@ -223,7 +261,7 @@ export default function HomePage() {
 
             <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
               {TEMPLATES.map((template) => (
-                <Link href="/signup" key={template.name} className="template-card group bg-white">
+                <Link href={template.href} key={template.name} className="template-card group bg-white">
                   <div className="aspect-[3/4] bg-white p-5">
                     <div className={`h-4 w-2/3 rounded ${template.accent}`} />
                     <div className="mt-2 h-2 w-1/2 rounded bg-gray-200" />
@@ -409,11 +447,44 @@ const FEATURES = [
   },
 ];
 
+const EXPLORE_TOOLS = [
+  {
+    title: "AI Resume Builder",
+    href: "/ai-resume-builder",
+    body: "Create an ATS-friendly resume with AI writing help, clean templates, and PDF or Word export.",
+  },
+  {
+    title: "ATS Resume Checker",
+    href: "/ats-resume-checker",
+    body: "Compare your resume with a job description and find gaps before you apply.",
+  },
+  {
+    title: "Resume Keyword Scanner",
+    href: "/resume-keyword-scanner",
+    body: "Find missing keywords and add relevant role language naturally.",
+  },
+  {
+    title: "Cover Letter Generator",
+    href: "/cover-letter-generator",
+    body: "Generate a tailored cover letter draft from your resume and target role.",
+  },
+  {
+    title: "Resume Templates",
+    href: "/templates",
+    body: "Browse ATS-friendly templates by country, format, and professional style.",
+  },
+  {
+    title: "Expert Resume Review",
+    href: "/expert-resume-review",
+    body: "Get focused human feedback on clarity, keywords, formatting, and role fit.",
+  },
+];
+
 const TEMPLATES = [
-  { name: "Modern", body: "Clean accent layout for most business and tech roles.", accent: "bg-brand-600" },
-  { name: "Classic", body: "Traditional structure for conservative industries.", accent: "bg-gray-800" },
-  { name: "Compact", body: "Dense format for experienced candidates who need space.", accent: "bg-emerald-700" },
-  { name: "Custom", body: "Canvas-based editor for full control over blocks and visuals.", accent: "bg-purple-700" },
+  { name: "ATS Clean", body: "Clean accent layout for most business and tech roles.", accent: "bg-brand-600", href: "/templates/us-ats-clean" },
+  { name: "Classic", body: "Traditional structure for conservative industries.", accent: "bg-gray-800", href: "/templates/us-classic-pro" },
+  { name: "Executive", body: "Premium layout for senior candidates and leaders.", accent: "bg-emerald-700", href: "/templates/us-executive" },
+  { name: "UK CV", body: "Professional CV format for UK job applications.", accent: "bg-purple-700", href: "/templates/uk-ats-clean" },
 ];
 
 const OUTCOMES = [

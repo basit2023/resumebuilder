@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import type { CustomBlock } from "@/lib/types";
@@ -151,13 +152,18 @@ export function TemplatesBrowser() {
             <p className="mt-3 rounded-lg bg-emerald-50 px-3 py-2 text-xs font-medium text-emerald-700">
               Includes editable sample content and a custom canvas layout.
             </p>
-            <button
-              onClick={() => use(preset.id)}
-              disabled={loadingId === preset.id}
-              className="btn-primary mt-4 w-full justify-center"
-            >
-              {loadingId === preset.id ? "Opening..." : "Use this template"}
-            </button>
+            <div className="mt-4 grid gap-2 sm:grid-cols-2">
+              <Link href={`/templates/${preset.slug}`} className="btn-secondary justify-center">
+                Preview template
+              </Link>
+              <button
+                onClick={() => use(preset.id)}
+                disabled={loadingId === preset.id}
+                className="btn-primary justify-center"
+              >
+                {loadingId === preset.id ? "Opening..." : "Use this template"}
+              </button>
+            </div>
           </div>
         );
       })}

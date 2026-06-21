@@ -29,6 +29,11 @@ export const PUBLIC_ROUTES = [
     priority: 0.7,
   },
   {
+    path: "/expert-resume-review",
+    changeFrequency: "monthly",
+    priority: 0.8,
+  },
+  {
     path: "/pricing",
     changeFrequency: "monthly",
     priority: 0.6,

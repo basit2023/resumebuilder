@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { SiteHeader } from "@/components/SiteHeader";
 import { UpgradeButton } from "./UpgradeButton";
 import { BILLING_ENABLED } from "@/lib/config";
-import { absoluteUrl } from "@/lib/seo";
+import { absoluteUrl, SITE_DESCRIPTION, SITE_NAME } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Free AI Resume Builder Pricing",
@@ -12,14 +12,43 @@ export const metadata: Metadata = {
   alternates: {
     canonical: absoluteUrl("/pricing"),
   },
+  openGraph: {
+    title: "Free AI Resume Builder Pricing",
+    description:
+      "Start using JobDraftly for free during early access. Build resumes, tailor them to job descriptions, check ATS match, and export PDF or Word files.",
+    url: absoluteUrl("/pricing"),
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Free AI Resume Builder Pricing",
+    description:
+      "Start using JobDraftly for free during early access. Build resumes, tailor them to job descriptions, check ATS match, and export PDF or Word files.",
+  },
 };
 
 export default function PricingPage() {
+  const softwareAppJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    name: SITE_NAME,
+    applicationCategory: "BusinessApplication",
+    operatingSystem: "Web",
+    url: absoluteUrl("/pricing"),
+    description: SITE_DESCRIPTION,
+    offers: {
+      "@type": "Offer",
+      price: BILLING_ENABLED ? "9" : "0",
+      priceCurrency: "USD",
+    },
+  };
+
   // Early-access mode: no paid plans shown - everything is free.
   if (!BILLING_ENABLED) {
     return (
       <>
         <SiteHeader />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareAppJsonLd) }} />
         <main className="hero-mesh pb-24">
           <div className="mx-auto max-w-2xl px-6 py-24 text-center">
             <span className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 py-1.5 text-xs font-semibold text-emerald-700">
@@ -62,6 +91,7 @@ export default function PricingPage() {
   return (
     <>
       <SiteHeader />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareAppJsonLd) }} />
       <main className="hero-mesh pb-24">
         {/* Header */}
         <div className="py-20 text-center px-6">

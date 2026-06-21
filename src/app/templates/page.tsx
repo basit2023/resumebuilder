@@ -10,6 +10,19 @@ export const metadata: Metadata = {
   alternates: {
     canonical: absoluteUrl("/templates"),
   },
+  openGraph: {
+    title: "ATS Resume Templates for US, UK, EU, Canada, India and More",
+    description:
+      "Browse editable ATS-friendly resume templates by country, format, and role. Start with a modern, classic, compact, or custom resume layout.",
+    url: absoluteUrl("/templates"),
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "ATS Resume Templates for US, UK, EU, Canada, India and More",
+    description:
+      "Browse editable ATS-friendly resume templates by country, format, and role. Start with a modern, classic, compact, or custom resume layout.",
+  },
 };
 
 export default function TemplatesPage() {

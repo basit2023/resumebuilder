@@ -3,8 +3,16 @@ import { uid } from "./utils";
 
 export type TemplatePreset = {
   id: string;
+  slug: string;
   name: string;
   description: string;
+  seoTitle: string;
+  seoDescription: string;
+  shortDescription: string;
+  longDescription: string;
+  bestFor: string[];
+  features: string[];
+  faq: { question: string; answer: string }[];
   category: string;
   country: string;
   countryCode: string;
@@ -274,18 +282,65 @@ const PROFESSIONAL_STYLES = [
 ] as const;
 
 export const TEMPLATE_PRESETS: TemplatePreset[] = COUNTRY_FORMATS.flatMap((country) =>
-  PROFESSIONAL_STYLES.map((style) => ({
-    id: `${country.countryCode.toLowerCase()}-${style.key}`,
-    name: `${country.countryCode} ${style.label}`,
-    description: `${style.description} Built for ${country.note}.`,
-    category: style.category,
-    country: country.country,
-    countryCode: country.countryCode,
-    format: country.format,
-    accent: style.accent,
-    build: style.build,
-  }))
+  PROFESSIONAL_STYLES.map((style) => {
+    const id = `${country.countryCode.toLowerCase()}-${style.key}`;
+    const name = `${country.countryCode} ${style.label}`;
+    const formatLabel = country.format;
+    const categoryLabel = style.category.toLowerCase();
+    return {
+      id,
+      slug: id,
+      name,
+      description: `${style.description} Built for ${country.note}.`,
+      seoTitle: `${name} Template | ATS-Friendly ${formatLabel}`,
+      seoDescription: `Preview the ${name} resume template for ${country.country}. Use an ATS-friendly ${categoryLabel} layout with clear sections, editable sample content, and a professional format.`,
+      shortDescription: `${style.description} Optimized for ${country.country} applications.`,
+      longDescription: `The ${name} template gives job seekers a structured ${formatLabel} layout that is easy to scan, simple to edit, and built around the sections recruiters expect. It balances professional formatting with practical ATS readability, so your experience, skills, projects, and education stay clear when you apply online.`,
+      bestFor: [
+        `Job seekers applying in ${country.country}`,
+        `${style.category} roles that need a polished first impression`,
+        "Applicants who want a readable, ATS-friendly resume structure",
+      ],
+      features: [
+        `Designed around ${country.note}`,
+        "Clean section hierarchy for fast recruiter scanning",
+        "Editable sample content for summaries, experience, education, skills, and projects",
+        "Works with JobDraftly AI writing, ATS scoring, keyword suggestions, and PDF or Word export",
+      ],
+      faq: [
+        {
+          question: `Is the ${name} template ATS-friendly?`,
+          answer:
+            "Yes. The layout uses clear sections and readable structure so applicant tracking systems can parse the core resume content more reliably.",
+        },
+        {
+          question: `Who should use this ${formatLabel} template?`,
+          answer: `It is a strong fit for candidates targeting ${country.country} roles who want a professional ${categoryLabel} resume format without starting from a blank page.`,
+        },
+        {
+          question: "Can I edit this template after choosing it?",
+          answer:
+            "Yes. You can edit the text, sections, color accents, layout blocks, and resume content inside the JobDraftly dashboard.",
+        },
+        {
+          question: "Can I download the finished resume?",
+          answer:
+            "Yes. JobDraftly supports clean PDF export and editable Word export, depending on what an employer or job board requests.",
+        },
+      ],
+      category: style.category,
+      country: country.country,
+      countryCode: country.countryCode,
+      format: country.format,
+      accent: style.accent,
+      build: style.build,
+    };
+  })
 );
+
+export function getTemplatePresetBySlug(slug: string) {
+  return TEMPLATE_PRESETS.find((preset) => preset.slug === slug);
+}
 
 type CountrySample = {
   name: string;
